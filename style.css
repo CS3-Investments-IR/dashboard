@@ -2897,3 +2897,76 @@ textarea {
     background: #2da44e;
     transform: translateY(-1px);
 }
+
+/* ========== CHAT INTERFACE ========== */
+.chat-card {
+    margin-bottom: 1.5rem;
+}
+
+.chat-status {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.chat-messages {
+    max-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.chat-message {
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    max-width: 85%;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.chat-message.from-jesus {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--accent-primary);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+
+.chat-message.from-al {
+    background: var(--accent-primary);
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+}
+
+.chat-message-sender {
+    font-weight: 600;
+    color: var(--accent-primary);
+}
+
+.chat-message.from-al .chat-message-sender {
+    color: rgba(255,255,255,0.8);
+}
+
+.chat-message-time {
+    color: var(--text-muted);
+}
+
+.chat-message.from-al .chat-message-time {
+    color: rgba(255,255,255,0.6);
+}
+
+.chat-message-content {
+    color: var(--text-primary);
+}
+
+.chat-message.from-al .chat-message-content {
+    color: white;
+}

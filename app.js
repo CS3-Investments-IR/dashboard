@@ -1732,3 +1732,81 @@ document.querySelectorAll('.nav-tab').forEach(tab => {
         if (this.dataset.section === 'access') renderAccess();
     });
 });
+
+// ========== CHAT INTERFACE ==========
+function renderChat() {
+    const chat = dashboardData.chat;
+    if (!chat) return;
+    
+    // Update last update time
+    const lastUpdate = document.getElementById('chatLastUpdate');
+    if (lastUpdate && chat.lastUpdated) {
+        const date = new Date(chat.lastUpdated);
+        lastUpdate.textContent = `Updated: ${date.toLocaleString()}`;
+    }
+    
+    // Get localStorage notes (Al's messages)
+    const localNotes = JSON.parse(localStorage.getItem('jesusNotes')) || [];
+    const sentNotes = localNotes.filter(n => n.status === 'sent' || n.status === 'read');
+    
+    // Combine Jesus's messages with Al's sent notes
+    const allMessages = [];
+    
+    // Add Jesus's messages from data.js
+    if (chat.messages) {
+        chat.messages.forEach(msg => {
+            allMessages.push({
+                ...msg,
+                sortTime: new Date(msg.timestamp).getTime()
+            });
+        });
+    }
+    
+    // Add Al's sent notes as messages
+    sentNotes.forEach(note => {
+        allMessages.push({
+            id: 'al-' + note.id,
+            from: 'al',
+            content: note.content,
+            timestamp: note.createdAt,
+            sortTime: new Date(note.createdAt).getTime()
+        });
+    });
+    
+    // Sort by time
+    allMessages.sort((a, b) => a.sortTime - b.sortTime);
+    
+    // Render
+    const container = document.getElementById('chatMessages');
+    if (!container) return;
+    
+    if (allMessages.length === 0) {
+        container.innerHTML = '<div class="empty-state"><p>No messages yet. Send a note to start chatting!</p></div>';
+        return;
+    }
+    
+    container.innerHTML = allMessages.map(msg => {
+        const isJesus = msg.from === 'jesus';
+        const time = new Date(msg.timestamp).toLocaleString();
+        return `
+            <div class="chat-message from-${msg.from}">
+                <div class="chat-message-header">
+                    <span class="chat-message-sender">${isJesus ? '⚡ Jesus' : '👤 Al'}</span>
+                    <span class="chat-message-time">${time}</span>
+                </div>
+                <div class="chat-message-content">${msg.content}</div>
+            </div>
+        `;
+    }).join('');
+    
+    // Scroll to bottom
+    container.scrollTop = container.scrollHeight;
+}
+
+// Render chat on load and tab switch
+document.addEventListener('DOMContentLoaded', renderChat);
+document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        if (this.dataset.section === 'notes') renderChat();
+    });
+});
