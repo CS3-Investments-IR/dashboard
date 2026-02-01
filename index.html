@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jesus Dashboard V2 ⚡ | AI Agent Management Platform</title>
-    <link rel="stylesheet" href="style.css?v=20">
+    <link rel="stylesheet" href="style.css?v=21">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1a1a2e">
@@ -46,6 +46,8 @@
         <button class="nav-tab" data-section="content">📰 Content</button>
         <button class="nav-tab" data-section="health">🖥️ Health</button>
         <button class="nav-tab" data-section="metrics">📈 Metrics</button>
+        <button class="nav-tab" data-section="proposals">💰 Proposals</button>
+        <button class="nav-tab" data-section="challenges">🎯 Challenges</button>
     </nav>
 
     <!-- Main Content Area -->
@@ -869,6 +871,74 @@
                 </div>
             </div>
         </section>
+
+        <!-- PROPOSALS SECTION -->
+        <section id="proposals" class="content-section">
+            <div class="section-header">
+                <h2>💰 Project Proposals & Budget</h2>
+                <p class="section-desc">Every project needs cost estimate + Al approval before building.</p>
+            </div>
+            
+            <!-- Budget Overview -->
+            <div class="budget-overview">
+                <div class="budget-card">
+                    <span class="budget-label">Approved Budget</span>
+                    <span class="budget-value" id="budgetApproved">$0</span>
+                </div>
+                <div class="budget-card">
+                    <span class="budget-label">Spent</span>
+                    <span class="budget-value" id="budgetSpent">$0</span>
+                </div>
+                <div class="budget-card">
+                    <span class="budget-label">Pending Approval</span>
+                    <span class="budget-value warning" id="budgetPending">$0</span>
+                </div>
+                <div class="budget-card highlight">
+                    <span class="budget-label">Remaining</span>
+                    <span class="budget-value" id="budgetRemaining">$0</span>
+                </div>
+            </div>
+            
+            <!-- Proposals List -->
+            <div class="proposals-container">
+                <h3>📋 Pending Approval</h3>
+                <div class="proposals-list" id="pendingProposals"></div>
+                
+                <h3 style="margin-top:2rem;">✅ Approved Projects</h3>
+                <div class="proposals-list" id="approvedProposals"></div>
+            </div>
+        </section>
+
+        <!-- CHALLENGES SECTION -->
+        <section id="challenges" class="content-section">
+            <div class="section-header">
+                <h2>🎯 AL Current Challenges</h2>
+                <p class="section-desc">List your challenges here. Jesus checks daily and builds solutions.</p>
+            </div>
+            
+            <!-- Add Challenge Form -->
+            <div class="add-challenge-form">
+                <input type="text" id="newChallengeInput" placeholder="Describe a challenge you're facing...">
+                <select id="challengePriority">
+                    <option value="high">🔴 High Priority</option>
+                    <option value="medium">🟡 Medium</option>
+                    <option value="low">🟢 Low</option>
+                </select>
+                <button onclick="addChallenge()" class="btn-primary">Add Challenge</button>
+            </div>
+            
+            <!-- Challenges List -->
+            <div class="challenges-container">
+                <h3>🔄 In Progress</h3>
+                <div class="challenges-list" id="inProgressChallenges"></div>
+                
+                <h3 style="margin-top:2rem;">📋 Open</h3>
+                <div class="challenges-list" id="openChallenges"></div>
+                
+                <h3 style="margin-top:2rem;">✅ Solved</h3>
+                <div class="challenges-list" id="solvedChallenges"></div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -878,7 +948,7 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="data.js?v=20"></script>
-    <script src="app.js?v=20"></script>
+    <script src="data.js?v=21"></script>
+    <script src="app.js?v=21"></script>
 </body>
 </html>

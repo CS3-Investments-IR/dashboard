@@ -1236,3 +1236,155 @@ ${relatedFiles}
     }
 
 })();
+
+// ========== PROPOSALS SECTION ==========
+function renderProposals() {
+    const proposals = dashboardData.projectProposals || [];
+    const budget = dashboardData.budgetTracker || {};
+    
+    // Update budget display
+    document.getElementById('budgetApproved').textContent = '$' + (budget.approvedTotal || 0);
+    document.getElementById('budgetSpent').textContent = '$' + (budget.spentTotal || 0);
+    document.getElementById('budgetPending').textContent = '$' + (budget.pendingApproval || 0);
+    document.getElementById('budgetRemaining').textContent = '$' + ((budget.thisMonth?.remaining) || 0);
+    
+    // Render pending proposals
+    const pendingContainer = document.getElementById('pendingProposals');
+    const pending = proposals.filter(p => p.status === 'pending');
+    
+    if (pending.length === 0) {
+        pendingContainer.innerHTML = '<p class="empty-state">No pending proposals</p>';
+    } else {
+        pendingContainer.innerHTML = pending.map(p => `
+            <div class="proposal-card pending">
+                <div class="proposal-header">
+                    <span class="proposal-title">${p.name}</span>
+                    <span class="proposal-cost">${p.costEstimate.build}</span>
+                </div>
+                <p class="proposal-description">${p.description}</p>
+                <div class="proposal-filters">
+                    ${p.filtersPassed.map(f => `<span class="filter-tag">✓ ${f}</span>`).join('')}
+                </div>
+                <div class="proposal-roi">
+                    <div class="proposal-roi-label">📈 ROI Projection</div>
+                    <div class="proposal-roi-text">${p.roiProjection}</div>
+                </div>
+                <small style="color:var(--text-muted)">Submitted: ${p.submittedDate}</small>
+            </div>
+        `).join('');
+    }
+    
+    // Render approved proposals
+    const approvedContainer = document.getElementById('approvedProposals');
+    const approved = proposals.filter(p => p.status === 'approved' || p.status === 'in_progress' || p.status === 'complete');
+    
+    if (approved.length === 0) {
+        approvedContainer.innerHTML = '<p class="empty-state">No approved proposals yet</p>';
+    } else {
+        approvedContainer.innerHTML = approved.map(p => `
+            <div class="proposal-card approved">
+                <div class="proposal-header">
+                    <span class="proposal-title">${p.name}</span>
+                    <span class="proposal-cost">${p.costEstimate.build}</span>
+                </div>
+                <p class="proposal-description">${p.description}</p>
+                <div class="proposal-filters">
+                    ${p.filtersPassed.map(f => `<span class="filter-tag">✓ ${f}</span>`).join('')}
+                </div>
+                ${p.alFeedback ? `<p style="color:var(--accent-green);margin-top:0.5rem;"><strong>Al:</strong> ${p.alFeedback}</p>` : ''}
+            </div>
+        `).join('');
+    }
+}
+
+// ========== CHALLENGES SECTION ==========
+function renderChallenges() {
+    const challenges = dashboardData.alChallenges || [];
+    
+    // In Progress
+    const inProgressContainer = document.getElementById('inProgressChallenges');
+    const inProgress = challenges.filter(c => c.status === 'in_progress');
+    renderChallengeList(inProgressContainer, inProgress);
+    
+    // Open
+    const openContainer = document.getElementById('openChallenges');
+    const open = challenges.filter(c => c.status === 'open');
+    renderChallengeList(openContainer, open);
+    
+    // Solved
+    const solvedContainer = document.getElementById('solvedChallenges');
+    const solved = challenges.filter(c => c.status === 'solved');
+    renderChallengeList(solvedContainer, solved);
+}
+
+function renderChallengeList(container, challenges) {
+    if (challenges.length === 0) {
+        container.innerHTML = '<p class="empty-state">None</p>';
+        return;
+    }
+    
+    container.innerHTML = challenges.map(c => `
+        <div class="challenge-card ${c.priority}">
+            <div class="challenge-header">
+                <span class="challenge-text">${c.challenge}</span>
+                <span class="challenge-date">${c.dateAdded}</span>
+            </div>
+            ${c.jesusSolution ? `
+                <div class="challenge-solution">
+                    <div class="challenge-solution-label">⚡ Jesus Solution</div>
+                    <div class="challenge-solution-text">${c.jesusSolution}</div>
+                </div>
+            ` : ''}
+        </div>
+    `).join('');
+}
+
+function addChallenge() {
+    const input = document.getElementById('newChallengeInput');
+    const priority = document.getElementById('challengePriority');
+    const text = input.value.trim();
+    
+    if (!text) {
+        alert('Please enter a challenge');
+        return;
+    }
+    
+    // Get existing challenges from localStorage or data
+    let challenges = JSON.parse(localStorage.getItem('alChallenges')) || dashboardData.alChallenges || [];
+    
+    const newChallenge = {
+        id: Date.now(),
+        challenge: text,
+        priority: priority.value,
+        dateAdded: new Date().toISOString().split('T')[0],
+        status: 'open',
+        jesusSolution: '',
+        solutionDate: ''
+    };
+    
+    challenges.unshift(newChallenge);
+    localStorage.setItem('alChallenges', JSON.stringify(challenges));
+    dashboardData.alChallenges = challenges;
+    
+    input.value = '';
+    renderChallenges();
+    
+    alert('Challenge added! Jesus will review and build a solution.');
+}
+
+// Add to init
+const originalInit = window.onload;
+window.onload = function() {
+    if (originalInit) originalInit();
+    renderProposals();
+    renderChallenges();
+};
+
+// Also render on tab switch
+document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        const section = this.dataset.section;
+        if (section === 'proposals') renderProposals();
+        if (section === 'challenges') renderChallenges();
+    });
+});
