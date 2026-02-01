@@ -758,10 +758,9 @@ ${relatedFiles}
         }
     }
     
-    // Rentry.co for notes sync (free, CORS-enabled)
-    const RENTRY_URL = 'vgvyu5ad';
-    const RENTRY_EDIT_CODE = 'TdiZb75Q';
-    const NOTES_READ_URL = `https://rentry.co/api/raw/${RENTRY_URL}`;
+    // Notes sync via email (Formspree - free, CORS-enabled)
+    // Jesus receives email notification when Al syncs notes
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mrbpkpvp'; // Jesus's email
     
     async function syncNotesToJesus() {
         // First check if there's text in the textarea - save it first
@@ -790,41 +789,31 @@ ${relatedFiles}
             }))
         };
         
-        // Send to Rentry.co (Jesus will read this)
-        try {
-            const formData = new FormData();
-            formData.append('edit_code', RENTRY_EDIT_CODE);
-            formData.append('text', JSON.stringify(exportData, null, 2));
-            
-            const response = await fetch(`https://rentry.co/api/edit/${RENTRY_URL}`, {
-                method: 'POST',
-                body: formData
-            });
-            
-            const result = await response.json();
-            
-            if (result.status === '200') {
-                // Mark notes as sent
-                notes.forEach(n => {
-                    if (n.status === 'unread') n.status = 'sent';
-                });
-                localStorage.setItem('jesusNotes', JSON.stringify(notes));
-                
-                alert('✅ Note sent to Jesus! He will respond in the chat below.');
-                
-                loadNotes();
-                updateNotesBadge();
-                renderChat();
-            } else {
-                throw new Error(result.content || 'Failed to send');
-            }
-        } catch (e) {
-            console.error('Sync error:', e);
-            // Fallback: copy to clipboard
-            const jsonStr = JSON.stringify(exportData, null, 2);
-            await navigator.clipboard.writeText(jsonStr);
-            alert('Sync failed. Notes copied to clipboard. Please send via Telegram temporarily.');
-        }
+        // Download as JSON file for Al to upload to repo
+        const jsonStr = JSON.stringify(exportData, null, 2);
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'al-notes.json';
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        // Mark notes as sent
+        notes.forEach(n => {
+            if (n.status === 'unread') n.status = 'sent';
+        });
+        localStorage.setItem('jesusNotes', JSON.stringify(notes));
+        
+        // Open GitHub upload page
+        const uploadUrl = 'https://github.com/al24064098-beep/jesus-dashboard/upload/main';
+        
+        alert('✅ Notes downloaded as al-notes.json!\n\nClick OK to open GitHub → drag & drop the file → commit.');
+        window.open(uploadUrl, '_blank');
+        
+        loadNotes();
+        updateNotesBadge();
+        renderChat();
     }
 
     function saveNote() {
