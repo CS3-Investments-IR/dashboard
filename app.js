@@ -758,7 +758,11 @@ ${relatedFiles}
         }
     }
     
-    function syncNotesToJesus() {
+    // JSONBlob ID for notes storage (free, no signup)
+    const NOTES_BLOB_ID = '019c1a2d-372c-7680-b4e9-b42d61d8c2fa';
+    const NOTES_API_URL = `https://jsonblob.com/api/jsonBlob/${NOTES_BLOB_ID}`;
+    
+    async function syncNotesToJesus() {
         // First check if there's text in the textarea - save it first
         const contentArea = document.getElementById('noteContent');
         if (contentArea && contentArea.value.trim()) {
@@ -766,14 +770,14 @@ ${relatedFiles}
         }
         
         const notes = JSON.parse(localStorage.getItem('jesusNotes')) || [];
-        const unreadNotes = notes.filter(n => n.status === 'unread' || n.status === 'sent');
+        const unreadNotes = notes.filter(n => n.status === 'unread');
         
         if (unreadNotes.length === 0) {
             alert('No notes to sync! Write a note first.');
             return;
         }
         
-        // Format as JSON for GitHub
+        // Format data
         const exportData = {
             lastUpdated: new Date().toISOString(),
             notes: unreadNotes.map(n => ({
@@ -785,32 +789,33 @@ ${relatedFiles}
             }))
         };
         
-        const jsonStr = JSON.stringify(exportData, null, 2);
-        
-        // Copy to clipboard
-        navigator.clipboard.writeText(jsonStr).then(() => {
-            // Mark notes as sent
-            notes.forEach(n => {
-                if (n.status === 'unread') n.status = 'sent';
+        // Send to JSONBlob (Jesus will read this)
+        try {
+            const response = await fetch(NOTES_API_URL, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(exportData)
             });
-            localStorage.setItem('jesusNotes', JSON.stringify(notes));
             
-            // Open GitHub edit page for al-notes.json
-            const githubEditUrl = 'https://github.com/al24064098-beep/jesus-dashboard/edit/main/al-notes.json';
-            
-            // Auto-open GitHub edit page
-            window.open(githubEditUrl, '_blank');
-            alert('Notes copied! Paste in GitHub and commit.');
-            
-            loadNotes();
-            updateNotesBadge();
-            renderChat();
-        }).catch(() => {
-            // Fallback
-            const githubEditUrl = 'https://github.com/al24064098-beep/jesus-dashboard/edit/main/al-notes.json';
-            prompt('Copy this JSON and paste into GitHub:', jsonStr);
-            window.open(githubEditUrl, '_blank');
-        });
+            if (response.ok) {
+                // Mark notes as sent
+                notes.forEach(n => {
+                    if (n.status === 'unread') n.status = 'sent';
+                });
+                localStorage.setItem('jesusNotes', JSON.stringify(notes));
+                
+                alert('✅ Note sent to Jesus! He will respond in the chat below.');
+                
+                loadNotes();
+                updateNotesBadge();
+                renderChat();
+            } else {
+                throw new Error('Failed to send');
+            }
+        } catch (e) {
+            console.error('Sync error:', e);
+            alert('Failed to sync. Check console for details.');
+        }
     }
 
     function saveNote() {
