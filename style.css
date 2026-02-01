@@ -196,6 +196,47 @@ main {
     margin: 0 auto;
 }
 
+/* Scripture Bar */
+.scripture-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.05));
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.scripture-icon {
+    font-size: 2rem;
+    animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.6)); }
+}
+
+.scripture-content {
+    flex: 1;
+}
+
+.scripture-text {
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.scripture-ref {
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin: 0.5rem 0 0 0;
+    font-weight: 600;
+}
+
 /* Status Bar */
 .status-bar {
     display: flex;

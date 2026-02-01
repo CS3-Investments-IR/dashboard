@@ -3,7 +3,21 @@
 document.addEventListener('DOMContentLoaded', () => {
     renderDashboard();
     updateTimestamp();
+    renderScripture();
+    
+    // Update scripture every 10 minutes
+    setInterval(renderScripture, 10 * 60 * 1000);
 });
+
+function renderScripture() {
+    // Use time-based index so it changes every 10 minutes consistently
+    const tenMinuteBlock = Math.floor(Date.now() / (10 * 60 * 1000));
+    const index = tenMinuteBlock % scriptures.length;
+    const scripture = scriptures[index];
+    
+    document.getElementById('scriptureText').textContent = `"${scripture.text}"`;
+    document.getElementById('scriptureRef').textContent = `— ${scripture.ref} (KJV)`;
+}
 
 function renderDashboard() {
     renderStatus();
