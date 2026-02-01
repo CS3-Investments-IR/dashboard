@@ -101,7 +101,40 @@ function renderMetrics() {
     document.getElementById('tasksCompleted').textContent = dashboardData.metrics.tasksCompleted;
 }
 
-// Auto-refresh every 5 minutes (if page stays open)
-setInterval(() => {
-    location.reload();
-}, 5 * 60 * 1000);
+// Auto-refresh every 60 seconds (silent update)
+async function checkForUpdates() {
+    try {
+        const response = await fetch('data.js?t=' + Date.now());
+        const text = await response.text();
+        
+        // Extract the data object from the JS file
+        const newData = eval(text + '; dashboardData;');
+        
+        // Check if data changed
+        if (newData.lastUpdated !== dashboardData.lastUpdated) {
+            // Update the global data
+            Object.assign(dashboardData, newData);
+            renderDashboard();
+            updateTimestamp();
+            showUpdateNotification();
+        }
+    } catch (e) {
+        console.log('Update check failed:', e);
+    }
+}
+
+function showUpdateNotification() {
+    const indicator = document.getElementById('statusIndicator');
+    indicator.classList.add('updated');
+    setTimeout(() => indicator.classList.remove('updated'), 2000);
+}
+
+// Check for updates every 60 seconds
+setInterval(checkForUpdates, 60 * 1000);
+
+// Also check immediately on focus (when Al switches back to tab)
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+        checkForUpdates();
+    }
+});

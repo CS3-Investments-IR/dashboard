@@ -172,6 +172,15 @@ header {
     color: var(--text-secondary);
 }
 
+.status-indicator.updated {
+    animation: flashUpdate 0.5s ease-out;
+}
+
+@keyframes flashUpdate {
+    0% { background: var(--accent); }
+    100% { background: var(--bg-primary); }
+}
+
 .last-updated {
     font-size: 0.8rem;
     color: var(--text-secondary);
