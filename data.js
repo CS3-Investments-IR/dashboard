@@ -61,13 +61,13 @@ const dashboardData = {
     
     // Activity log
     activity: [
+        { time: "04:20", icon: "🔍", message: "Reviewing Atlas API - needs auth research" },
         { time: "04:10", icon: "✅", message: "All 12 IR Agent templates created" },
-        { time: "03:55", icon: "🔨", message: "Starting IR Agents build" },
-        { time: "03:52", icon: "📧", message: "Sent email to Grace with prayer" },
-        { time: "03:47", icon: "✅", message: "Gmail API connected - can read/send email" },
-        { time: "03:33", icon: "📖", message: "Added KJV Scripture rotation" },
-        { time: "03:31", icon: "🔄", message: "Added auto-refresh (60s)" },
-        { time: "03:16", icon: "🚀", message: "Jesus Dashboard deployed to GitHub Pages" }
+        { time: "03:55", icon: "📧", message: "Sent email to Grace with prayer" },
+        { time: "03:47", icon: "✅", message: "Gmail API connected" },
+        { time: "03:33", icon: "📖", message: "KJV Scripture rotation added" },
+        { time: "03:25", icon: "🖼️", message: "Avatar added to dashboard" },
+        { time: "03:16", icon: "🚀", message: "Jesus Dashboard deployed" }
     ],
     
     // Projects
