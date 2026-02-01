@@ -1269,6 +1269,31 @@ function renderProposals() {
                     <div class="proposal-roi-label">📈 ROI Projection</div>
                     <div class="proposal-roi-text">${p.roiProjection}</div>
                 </div>
+                
+                ${p.optimizedOption ? `
+                <div class="proposal-comparison">
+                    <div class="comparison-header">💡 Budget Options</div>
+                    <div class="comparison-grid">
+                        <div class="comparison-option full">
+                            <strong>Full Version: ${p.costEstimate.build}</strong>
+                            <p>${p.costEstimate.notes}</p>
+                        </div>
+                        <div class="comparison-option optimized">
+                            <strong>Optimized: ${p.optimizedOption.build}</strong>
+                            <p>${p.optimizedOption.notes}</p>
+                        </div>
+                    </div>
+                    <div class="comparison-difference">
+                        <strong>Difference:</strong> ${p.optimizedOption.difference}
+                    </div>
+                </div>
+                ` : ''}
+                
+                <div class="proposal-actions">
+                    <button class="btn-approve" onclick="approveProposal(${p.id}, 'full')">✅ Approve Full</button>
+                    ${p.optimizedOption ? `<button class="btn-optimize" onclick="approveProposal(${p.id}, 'optimized')">🔄 Approve Optimized</button>` : ''}
+                    <button class="btn-reject" onclick="rejectProposal(${p.id})">❌ Reject</button>
+                </div>
                 <small style="color:var(--text-muted)">Submitted: ${p.submittedDate}</small>
             </div>
         `).join('');
@@ -1276,7 +1301,7 @@ function renderProposals() {
     
     // Render approved proposals
     const approvedContainer = document.getElementById('approvedProposals');
-    const approved = proposals.filter(p => p.status === 'approved' || p.status === 'in_progress' || p.status === 'complete');
+    const approved = proposals.filter(p => p.status === 'approved' || p.status === 'approved_optimized' || p.status === 'in_progress' || p.status === 'complete');
     
     if (approved.length === 0) {
         approvedContainer.innerHTML = '<p class="empty-state">No approved proposals yet</p>';
@@ -1294,6 +1319,31 @@ function renderProposals() {
                 ${p.alFeedback ? `<p style="color:var(--accent-green);margin-top:0.5rem;"><strong>Al:</strong> ${p.alFeedback}</p>` : ''}
             </div>
         `).join('');
+    }
+}
+
+function approveProposal(id, type) {
+    let proposals = dashboardData.projectProposals;
+    const proposal = proposals.find(p => p.id === id);
+    if (proposal) {
+        proposal.status = type === 'optimized' ? 'approved_optimized' : 'approved';
+        proposal.approvedDate = new Date().toISOString().split('T')[0];
+        proposal.alFeedback = type === 'optimized' ? 'Approved (Optimized Version)' : 'Approved (Full Version)';
+        localStorage.setItem('projectProposals', JSON.stringify(proposals));
+        renderProposals();
+        alert('Project approved! Jesus will start building.');
+    }
+}
+
+function rejectProposal(id) {
+    const feedback = prompt('Reason for rejection (optional):');
+    let proposals = dashboardData.projectProposals;
+    const proposal = proposals.find(p => p.id === id);
+    if (proposal) {
+        proposal.status = 'rejected';
+        proposal.alFeedback = feedback || 'Rejected';
+        localStorage.setItem('projectProposals', JSON.stringify(proposals));
+        renderProposals();
     }
 }
 
