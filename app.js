@@ -763,43 +763,47 @@ ${relatedFiles}
         const unreadNotes = notes.filter(n => n.status === 'unread');
         
         if (unreadNotes.length === 0) {
-            alert('No unread notes to send!');
+            alert('No unread notes to sync!');
             return;
         }
         
-        // Format notes for sending
-        let message = '📋 DASHBOARD NOTES:\n\n';
-        unreadNotes.forEach((note, i) => {
-            const typeEmoji = {
-                'task': '📋',
-                'feedback': '💬',
-                'idea': '💡',
-                'question': '❓',
-                'correction': '🔧'
-            }[note.type] || '📝';
-            
-            message += `${i+1}. ${typeEmoji} ${note.priority ? '⚡HIGH: ' : ''}${note.content}\n\n`;
-        });
+        // Format as JSON for GitHub
+        const exportData = {
+            lastUpdated: new Date().toISOString(),
+            notes: unreadNotes.map(n => ({
+                id: n.id,
+                type: n.type,
+                content: n.content,
+                priority: n.priority,
+                createdAt: n.createdAt
+            }))
+        };
+        
+        const jsonStr = JSON.stringify(exportData, null, 2);
         
         // Copy to clipboard
-        navigator.clipboard.writeText(message).then(() => {
-            // Mark notes as read
+        navigator.clipboard.writeText(jsonStr).then(() => {
+            // Mark notes as sent
             notes.forEach(n => {
                 if (n.status === 'unread') n.status = 'sent';
             });
             localStorage.setItem('jesusNotes', JSON.stringify(notes));
             
-            // Open Telegram (works on mobile and desktop)
-            const telegramUrl = `https://t.me/share/url?text=${encodeURIComponent(message)}`;
-            window.open(telegramUrl, '_blank');
+            // Open GitHub edit page for al-notes.json
+            const githubEditUrl = 'https://github.com/al24064098-beep/jesus-dashboard/edit/main/al-notes.json';
             
-            alert('Notes copied to clipboard and Telegram opened!\n\nJust paste and send to Jesus.');
+            if (confirm('Notes copied to clipboard!\n\nClick OK to open GitHub and paste.\n\nSteps:\n1. Select all existing content\n2. Paste (Ctrl+V)\n3. Click "Commit changes"')) {
+                window.open(githubEditUrl, '_blank');
+            }
             
             loadNotes();
             updateNotesBadge();
+            renderChat();
         }).catch(() => {
-            // Fallback: just show the message
-            prompt('Copy this and send to Jesus:', message);
+            // Fallback
+            const githubEditUrl = 'https://github.com/al24064098-beep/jesus-dashboard/edit/main/al-notes.json';
+            prompt('Copy this JSON and paste into GitHub:', jsonStr);
+            window.open(githubEditUrl, '_blank');
         });
     }
 
