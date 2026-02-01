@@ -77,7 +77,8 @@ Key reminder: Stop talking, start building. Save API costs.`,
     
     // Metrics
     metrics: {
-        apiCostToday: 2.50,
+        apiCostToday: 35.00,
+        apiCostTotal: 115.30,
         tasksCompleted: 3,
         hoursActive: 2
     }

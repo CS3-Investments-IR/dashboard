@@ -84,9 +84,9 @@ function renderNotes() {
 }
 
 function renderMetrics() {
+    document.getElementById('apiCostTotal').textContent = `$${dashboardData.metrics.apiCostTotal.toFixed(2)}`;
     document.getElementById('apiCost').textContent = `$${dashboardData.metrics.apiCostToday.toFixed(2)}`;
     document.getElementById('tasksCompleted').textContent = dashboardData.metrics.tasksCompleted;
-    document.getElementById('hoursActive').textContent = dashboardData.metrics.hoursActive;
 }
 
 // Auto-refresh every 5 minutes (if page stays open)
