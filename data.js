@@ -405,7 +405,72 @@ property-partner-landing/
         }
     ],
 
-    // ========== 13. JESUS RESPONSE ==========
+    // ========== 13. PROJECT PROPOSALS & APPROVALS ==========
+    // Every project needs cost estimate + Al approval
+    projectProposals: [
+        {
+            id: 1,
+            name: "Investor Referral Engine",
+            description: "Automated system to request referrals at optimal moments, track referral sources, create leaderboard",
+            filtersPassed: ["Get more customers", "Convert more customers", "Retain more customers"],
+            costEstimate: {
+                build: "$15-25",
+                monthly: "$0",
+                notes: "One-time build, runs on existing infrastructure"
+            },
+            roiProjection: "If 10% of 600 investors refer 1 person = 60 new leads. At 25% conversion = 15 new investors. At $50K avg = $750K potential.",
+            status: "pending", // pending, approved, rejected, in_progress, complete
+            submittedDate: "2026-02-01",
+            alFeedback: "",
+            approvedDate: ""
+        },
+        {
+            id: 2,
+            name: "Investor Health Score Alert System",
+            description: "Auto-flag when investor sentiment drops (missed calls, delayed responses, no contact in X days)",
+            filtersPassed: ["Retain more customers", "Smoother operations"],
+            costEstimate: {
+                build: "$10-15",
+                monthly: "$0",
+                notes: "Part of CRM build"
+            },
+            roiProjection: "Prevent 5% investor churn = retain $3.65M AUM. At 5% returns = $182K protected annual distributions.",
+            status: "approved",
+            submittedDate: "2026-02-01",
+            alFeedback: "I like it",
+            approvedDate: "2026-02-01"
+        },
+        {
+            id: 3,
+            name: "Distribution Day Content System",
+            description: "Pre-written celebration posts for social media on distribution days (1/15, 4/15, 7/15, 10/15)",
+            filtersPassed: ["Brand reputation", "Get more customers"],
+            costEstimate: {
+                build: "$5-8",
+                monthly: "$0",
+                notes: "Templates created once, reused quarterly"
+            },
+            roiProjection: "Social proof content attracts new investors. If 2 new investors per quarter from posts = 8/year = $400K new capital.",
+            status: "approved",
+            submittedDate: "2026-02-01",
+            alFeedback: "I like it",
+            approvedDate: "2026-02-01"
+        }
+    ],
+
+    // Budget Tracking
+    budgetTracker: {
+        approvedTotal: 35, // dollars
+        spentTotal: 12.50,
+        pendingApproval: 25,
+        thisMonth: {
+            budget: 100,
+            spent: 12.50,
+            remaining: 87.50
+        }
+    },
+
+    // ========== 14. JESUS RESPONSE ==========
     // Jesus's responses to Al's notes (updated when I push to GitHub)
     jesusResponse: {
         lastUpdated: "2026-02-01T16:10:00Z",
