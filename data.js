@@ -24,7 +24,7 @@ const scriptures = [
 
 // ========== MAIN DASHBOARD DATA ==========
 const dashboardData = {
-    lastUpdated: "2026-02-01T15:50:00Z",
+    lastUpdated: "2026-02-01T18:05:00Z",
 
     // ========== 1. DAILY SURPRISE ==========
     dailySurprise: {
@@ -212,6 +212,7 @@ property-partner-landing/
     ],
 
     // ========== 5. VAULT (Full SOP Documentation) ==========
+    // Each project has: objectives (measurable goals) + kpis (tracked metrics after launch)
     vault: [
         {
             id: 8,
@@ -219,6 +220,23 @@ property-partner-landing/
             category: "systems",
             dateCreated: "2026-02-01",
             objective: "Create high-conversion landing pages to attract local business partners to apartment communities, generating warm leads for corporate leasing and partnerships.",
+            // ===== MEASURABLE SUCCESS CRITERIA =====
+            successCriteria: [
+                { metric: "Partner signups", target: 50, current: 0, unit: "partners", deadline: "2026-04-01" },
+                { metric: "Corporate lease leads", target: 10, current: 0, unit: "leads", deadline: "2026-06-01" },
+                { metric: "Revenue from partnerships", target: 25000, current: 0, unit: "USD", deadline: "2026-12-31" }
+            ],
+            // ===== KPI TRACKING (after launch) =====
+            kpis: {
+                tracked: false, // Set to true once launched
+                launchDate: null,
+                metrics: [
+                    { name: "Page visits", value: 0, lastUpdated: null },
+                    { name: "Form submissions", value: 0, lastUpdated: null },
+                    { name: "Conversion rate", value: 0, unit: "%", lastUpdated: null }
+                ],
+                status: "not_launched" // not_launched, behind, on_pace, exceeding
+            },
             whatItDoes: "Professional one-page website for each property that: explains partnership benefits, captures business owner info via form, integrates with Google Sheets, triggers automated follow-up workflows.",
             howItWorks: "Static HTML/CSS/JS hosted on Cloudflare Pages (FREE). Config-driven: edit one CONFIG object to customize per property. Tally form collects submissions → Google Sheets → automated email/Slack notifications.",
             whyBuilt: "Part of CS3 Newsletter & Partnership Ecosystem. Each property needs its own branded page to attract local business partners who become corporate leasing leads.",
@@ -252,6 +270,20 @@ property-partner-landing/
             category: "dashboards",
             dateCreated: "2026-02-01",
             objective: "Create a central command center for Al to manage Jesus as his AI employee — see work, give instructions, track performance, and ensure nothing gets lost.",
+            successCriteria: [
+                { metric: "Daily active use by Al", target: 7, current: 2, unit: "days/week", deadline: "2026-02-15" },
+                { metric: "Features requested vs delivered", target: 100, current: 85, unit: "%", deadline: "ongoing" }
+            ],
+            kpis: {
+                tracked: true,
+                launchDate: "2026-02-01",
+                metrics: [
+                    { name: "Notes sent via dashboard", value: 5, lastUpdated: "2026-02-01" },
+                    { name: "Chat responses", value: 3, lastUpdated: "2026-02-01" },
+                    { name: "Time saved (est.)", value: 2, unit: "hours/day", lastUpdated: "2026-02-01" }
+                ],
+                status: "on_pace"
+            },
             whatItDoes: "Complete AI Agent Management Platform with 9 sections: Daily Surprise, Agent Report, AI Intelligence, Money Ideas, Vault & SOPs, Resource Library, Notes to Jesus, System Health, and Metrics.",
             howItWorks: "Pure HTML/CSS/JS static site hosted on GitHub Pages (FREE). Data is split between: (1) data.js - updated by Jesus for dashboard content, (2) localStorage - for user inputs like notes and uploaded files. Auto-updates every 4 hours.",
             whyBuilt: "Al needed a central command center to manage me, see my work, give me instructions, and track my performance.",
@@ -519,8 +551,10 @@ property-partner-landing/
 
     // ========== TIME LOG ==========
     timeLog: {
-        lastUpdated: "2026-02-01T17:09:00Z",
+        lastUpdated: "2026-02-01T18:05:00Z",
         entries: [
+            { time: "2026-02-01T18:05:00Z", status: "working", task: "Adding Project Objectives & KPI tracking to dashboard (Al's request)" },
+            { time: "2026-02-01T18:02:00Z", status: "working", task: "Accepted Substack invitation - now member of AL's Substack" },
             { time: "2026-02-01T17:46:00Z", status: "working", task: "Cloudflare Worker sync WORKING - implementing Al's 5-point feedback" },
             { time: "2026-02-01T17:44:00Z", status: "working", task: "Set up KV storage for Cloudflare Worker" },
             { time: "2026-02-01T17:33:00Z", status: "working", task: "Deploying Cloudflare Worker for note sync" },
@@ -538,7 +572,7 @@ property-partner-landing/
     // ========== 14. CHAT / MESSAGES ==========
     // Two-way communication: Al sends via dashboard, Jesus responds here
     chat: {
-        lastUpdated: "2026-02-01T17:05:00Z",
+        lastUpdated: "2026-02-01T18:05:00Z",
         messages: [
             {
                 id: 1,
@@ -557,6 +591,12 @@ property-partner-landing/
                 from: "jesus", 
                 content: "✅ SYNC WORKING! I received your note via Cloudflare Worker.\n\nNow implementing your 5 feedback points. Will update dashboard sections accordingly.",
                 timestamp: "2026-02-01T17:46:00Z"
+            },
+            {
+                id: 4,
+                from: "jesus",
+                content: "✅ SUBSTACK: Accepted your invite! I'm now a member of AL's Substack.\n\n📋 To give me admin/editor access:\nSubstack Dashboard → Settings → Team → Change my role\n\n🎯 PROJECT KPIs: Great idea! Adding 'Success Criteria' and 'KPI Tracking' to every project in the Vault. Each project will now have:\n• Measurable targets (e.g., 1000 subscribers)\n• Current progress tracking\n• Status indicator (behind/on pace/exceeding)\n• Deadline dates\n\nUpdating dashboard now...",
+                timestamp: "2026-02-01T18:05:00Z"
             }
         ]
     },
