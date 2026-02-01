@@ -45,6 +45,12 @@
         }
     }
 
+    // ========== NAVIGATION HELPER ==========
+    window.goToSection = function(sectionId) {
+        const tab = document.querySelector(`[data-section="${sectionId}"]`);
+        if (tab) tab.click();
+    };
+
     // ========== LOAD ALL DATA ==========
     function loadAllData() {
         if (typeof dashboardData === 'undefined') {
@@ -52,6 +58,7 @@
             return;
         }
 
+        loadOverview();
         loadDailySurprise();
         loadAgentReport();
         loadAIIntelligence();
@@ -63,6 +70,98 @@
         loadSystemHealth();
         loadMetrics();
         loadScripture();
+    }
+
+    // ========== 0. OVERVIEW / HOME ==========
+    function loadOverview() {
+        const data = dashboardData;
+        
+        // Quick Stats
+        const completedToday = data.agentReport?.completed?.length || 0;
+        const blockers = data.agentReport?.blockers?.length || 0;
+        const totalBuilds = data.vault?.length || 0;
+        const notes = JSON.parse(localStorage.getItem('jesusNotes')) || data.notes || [];
+        const unreadNotes = notes.filter(n => n.status === 'unread').length;
+        
+        document.getElementById('ovCompletedToday').textContent = completedToday;
+        document.getElementById('ovBlockers').textContent = blockers;
+        document.getElementById('ovTotalBuilds').textContent = totalBuilds;
+        document.getElementById('ovUnreadNotes').textContent = unreadNotes;
+        
+        // Daily Surprise Preview
+        if (data.dailySurprise?.today) {
+            document.getElementById('ovSurpriseTitle').textContent = data.dailySurprise.today.title;
+            document.getElementById('ovSurpriseDesc').textContent = data.dailySurprise.today.type + ' • ' + data.dailySurprise.today.impact;
+        }
+        
+        // Agent Report Summary
+        document.getElementById('ovCompleted').textContent = data.agentReport?.completed?.length || 0;
+        document.getElementById('ovPending').textContent = data.agentReport?.pending?.length || 0;
+        document.getElementById('ovNext').textContent = data.agentReport?.next?.length || 0;
+        
+        // Content Summary
+        const content = data.content || [];
+        document.getElementById('ovContentPending').textContent = content.filter(c => c.status === 'pending' || c.status === 'revision').length;
+        document.getElementById('ovContentApproved').textContent = content.filter(c => c.status === 'approved').length;
+        document.getElementById('ovContentPublished').textContent = content.filter(c => c.status === 'published').length;
+        
+        // Notes Preview
+        const notesPreview = document.getElementById('ovNotesPreview');
+        const recentNotes = notes.filter(n => n.status === 'unread').slice(0, 2);
+        if (recentNotes.length > 0) {
+            notesPreview.innerHTML = recentNotes.map(n => `<p>• ${n.content.substring(0, 50)}...</p>`).join('');
+        } else {
+            notesPreview.innerHTML = '<p class="empty-preview">No unread notes</p>';
+        }
+        
+        // Vault Summary
+        document.getElementById('ovVaultTotal').textContent = totalBuilds;
+        document.getElementById('ovVaultSOPs').textContent = data.vault?.filter(v => v.process)?.length || 0;
+        const recentBuild = data.vault?.[data.vault.length - 1];
+        if (recentBuild) {
+            document.getElementById('ovVaultRecent').textContent = 'Latest: ' + recentBuild.name;
+        }
+        
+        // Money Ideas
+        const ideas = data.moneyIdeas || [];
+        document.getElementById('ovMoneyIdeas').textContent = ideas.length;
+        const totalImpact = ideas.reduce((sum, i) => sum + (i.impact || 0), 0);
+        document.getElementById('ovMoneyImpact').textContent = formatMoney(totalImpact);
+        
+        // AI Intelligence
+        const intel = data.aiIntelligence || [];
+        document.getElementById('ovIntelCount').textContent = intel.length;
+        if (intel.length > 0) {
+            document.getElementById('ovIntelRecent').textContent = 'Latest: ' + intel[0].title;
+        }
+        
+        // System Health
+        const health = data.systemHealth;
+        if (health) {
+            const healthStatus = document.getElementById('ovHealthStatus');
+            const dot = healthStatus.querySelector('.health-dot');
+            const text = healthStatus.querySelector('span:last-child');
+            if (health.openclaw) {
+                dot.className = 'health-dot online';
+                text.textContent = 'All Systems Online';
+            } else {
+                dot.className = 'health-dot offline';
+                text.textContent = 'System Issue';
+            }
+            document.getElementById('ovUptime').textContent = (health.uptime || 0) + '%';
+        }
+        
+        // Metrics
+        const metrics = data.metrics;
+        if (metrics) {
+            document.getElementById('ovTasksToday').textContent = metrics.tasksToday || 0;
+            document.getElementById('ovHoursSaved').textContent = metrics.hoursSaved || 0;
+            document.getElementById('ovApiCost').textContent = '$' + (metrics.apiCostToday || 0);
+        }
+        
+        // Library
+        const library = JSON.parse(localStorage.getItem('jesusLibrary')) || data.library || [];
+        document.getElementById('ovLibraryCount').textContent = library.length;
     }
 
     // ========== 1. DAILY SURPRISE ==========

@@ -35,7 +35,8 @@
 
     <!-- Navigation Tabs -->
     <nav class="main-nav">
-        <button class="nav-tab active" data-section="surprise">🌟 Daily Surprise</button>
+        <button class="nav-tab active" data-section="overview">🏠 Overview</button>
+        <button class="nav-tab" data-section="surprise">🌟 Daily Surprise</button>
         <button class="nav-tab" data-section="report">📊 Agent Report</button>
         <button class="nav-tab" data-section="intelligence">🧠 AI Intelligence</button>
         <button class="nav-tab" data-section="money">💰 Money Ideas</button>
@@ -50,8 +51,244 @@
     <!-- Main Content Area -->
     <main class="main-content">
         
+        <!-- 0. OVERVIEW / HOME -->
+        <section id="overview" class="content-section active">
+            <div class="section-header">
+                <h2>🏠 Command Center</h2>
+                <p class="section-desc">Everything at a glance. Click any card to dive deeper.</p>
+            </div>
+            
+            <!-- Quick Stats Row -->
+            <div class="overview-stats">
+                <div class="overview-stat-card">
+                    <span class="stat-icon">✅</span>
+                    <div class="stat-info">
+                        <span class="stat-number" id="ovCompletedToday">0</span>
+                        <span class="stat-label">Completed Today</span>
+                    </div>
+                </div>
+                <div class="overview-stat-card warning">
+                    <span class="stat-icon">⚠️</span>
+                    <div class="stat-info">
+                        <span class="stat-number" id="ovBlockers">0</span>
+                        <span class="stat-label">Blockers</span>
+                    </div>
+                </div>
+                <div class="overview-stat-card">
+                    <span class="stat-icon">📁</span>
+                    <div class="stat-info">
+                        <span class="stat-number" id="ovTotalBuilds">0</span>
+                        <span class="stat-label">Total Builds</span>
+                    </div>
+                </div>
+                <div class="overview-stat-card highlight">
+                    <span class="stat-icon">💬</span>
+                    <div class="stat-info">
+                        <span class="stat-number" id="ovUnreadNotes">0</span>
+                        <span class="stat-label">Unread Notes</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Grid -->
+            <div class="overview-grid">
+                
+                <!-- Today's Surprise Preview -->
+                <div class="overview-card clickable" onclick="goToSection('surprise')">
+                    <div class="overview-card-header">
+                        <span class="card-icon">🌟</span>
+                        <h3>Daily Surprise</h3>
+                        <span class="card-arrow">→</span>
+                    </div>
+                    <div class="overview-card-body">
+                        <div class="surprise-preview" id="ovSurprisePreview">
+                            <strong id="ovSurpriseTitle">Loading...</strong>
+                            <p id="ovSurpriseDesc"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Agent Report Summary -->
+                <div class="overview-card clickable" onclick="goToSection('report')">
+                    <div class="overview-card-header">
+                        <span class="card-icon">📊</span>
+                        <h3>Agent Report</h3>
+                        <span class="card-arrow">→</span>
+                    </div>
+                    <div class="overview-card-body">
+                        <div class="report-summary">
+                            <div class="report-summary-item">
+                                <span class="summary-count" id="ovCompleted">0</span>
+                                <span class="summary-label">✅ Done</span>
+                            </div>
+                            <div class="report-summary-item">
+                                <span class="summary-count" id="ovPending">0</span>
+                                <span class="summary-label">📋 Pending</span>
+                            </div>
+                            <div class="report-summary-item">
+                                <span class="summary-count" id="ovNext">0</span>
+                                <span class="summary-label">🔮 Next</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content Status -->
+                <div class="overview-card clickable" onclick="goToSection('content')">
+                    <div class="overview-card-header">
+                        <span class="card-icon">📰</span>
+                        <h3>Content</h3>
+                        <span class="card-arrow">→</span>
+                    </div>
+                    <div class="overview-card-body">
+                        <div class="content-summary">
+                            <div class="content-summary-item pending">
+                                <span id="ovContentPending">0</span> Pending Review
+                            </div>
+                            <div class="content-summary-item approved">
+                                <span id="ovContentApproved">0</span> Approved
+                            </div>
+                            <div class="content-summary-item published">
+                                <span id="ovContentPublished">0</span> Published
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notes Preview -->
+                <div class="overview-card clickable" onclick="goToSection('notes')">
+                    <div class="overview-card-header">
+                        <span class="card-icon">💬</span>
+                        <h3>Notes to Jesus</h3>
+                        <span class="card-arrow">→</span>
+                    </div>
+                    <div class="overview-card-body">
+                        <div class="notes-preview" id="ovNotesPreview">
+                            <p class="empty-preview">No unread notes</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vault & SOPs -->
+                <div class="overview-card clickable" onclick="goToSection('vault')">
+                    <div class="overview-card-header">
+                        <span class="card-icon">📁</span>
+                        <h3>Vault & SOPs</h3>
+                        <span class="card-arrow">→</span>
+                    </div>
+                    <div class="overview-card-body">
+                        <div class="vault-summary">
+                            <div class="vault-summary-item">
+                                <span id="ovVaultTotal">0</span> Total Builds
+                            </div>
+                            <div class="vault-summary-item">
+                                <span id="ovVaultSOPs">0</span> SOPs Documented
+                            </div>
+                        </div>
+                        <div class="vault-recent" id="ovVaultRecent"></div>
+                    </div>
+                </div>
+                
+                <!-- Money Ideas -->
+                <div class="overview-card clickable" onclick="goToSection('money')">
+                    <div class="overview-card-header">
+                        <span class="card-icon">💰</span>
+                        <h3>Money Ideas</h3>
+                        <span class="card-arrow">→</span>
+                    </div>
+                    <div class="overview-card-body">
+                        <div class="money-summary">
+                            <div class="money-stat">
+                                <span class="money-value" id="ovMoneyIdeas">0</span>
+                                <span class="money-label">Ideas</span>
+                            </div>
+                            <div class="money-stat highlight">
+                                <span class="money-value" id="ovMoneyImpact">$0</span>
+                                <span class="money-label">Potential</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI Intelligence -->
+                <div class="overview-card clickable" onclick="goToSection('intelligence')">
+                    <div class="overview-card-header">
+                        <span class="card-icon">🧠</span>
+                        <h3>AI Intelligence</h3>
+                        <span class="card-arrow">→</span>
+                    </div>
+                    <div class="overview-card-body">
+                        <div class="intel-summary">
+                            <span id="ovIntelCount">0</span> items today
+                        </div>
+                        <div class="intel-recent" id="ovIntelRecent"></div>
+                    </div>
+                </div>
+                
+                <!-- System Health -->
+                <div class="overview-card clickable" onclick="goToSection('health')">
+                    <div class="overview-card-header">
+                        <span class="card-icon">🖥️</span>
+                        <h3>System Health</h3>
+                        <span class="card-arrow">→</span>
+                    </div>
+                    <div class="overview-card-body">
+                        <div class="health-summary">
+                            <div class="health-indicator" id="ovHealthStatus">
+                                <span class="health-dot online"></span>
+                                <span>All Systems Online</span>
+                            </div>
+                            <div class="health-uptime">
+                                Uptime: <strong id="ovUptime">--%</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Metrics -->
+                <div class="overview-card clickable" onclick="goToSection('metrics')">
+                    <div class="overview-card-header">
+                        <span class="card-icon">📈</span>
+                        <h3>Metrics</h3>
+                        <span class="card-arrow">→</span>
+                    </div>
+                    <div class="overview-card-body">
+                        <div class="metrics-summary">
+                            <div class="metric-mini">
+                                <span class="metric-mini-value" id="ovTasksToday">0</span>
+                                <span class="metric-mini-label">Tasks Today</span>
+                            </div>
+                            <div class="metric-mini">
+                                <span class="metric-mini-value" id="ovHoursSaved">0</span>
+                                <span class="metric-mini-label">Hours Saved</span>
+                            </div>
+                            <div class="metric-mini">
+                                <span class="metric-mini-value" id="ovApiCost">$0</span>
+                                <span class="metric-mini-label">API Cost</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Library -->
+                <div class="overview-card clickable" onclick="goToSection('library')">
+                    <div class="overview-card-header">
+                        <span class="card-icon">📚</span>
+                        <h3>Resource Library</h3>
+                        <span class="card-arrow">→</span>
+                    </div>
+                    <div class="overview-card-body">
+                        <div class="library-summary">
+                            <span id="ovLibraryCount">0</span> documents uploaded
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+        
         <!-- 1. DAILY SURPRISE -->
-        <section id="surprise" class="content-section active">
+        <section id="surprise" class="content-section">
             <div class="section-header">
                 <h2>🌟 Daily Surprise</h2>
                 <p class="section-desc">Every morning, Al wakes up to something amazing I built overnight.</p>
