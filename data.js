@@ -251,6 +251,72 @@ You now have a complete command center to manage me as your AI employee. Everyth
                 "Reference for future enhancements"
             ],
             relatedFilesText: "memory/JESUS-DASHBOARD-V2-SPEC.md"
+        },
+        {
+            id: 5,
+            name: "Atlas AI Voice Agents",
+            category: "systems",
+            dateCreated: "2026-01-31",
+            objective: "Create AI voice agents for CS3 properties to handle leasing inquiries, qualify prospects, schedule tours, and provide 24/7 property information — capturing leads that would otherwise be lost.",
+            whatItDoes: "AI-powered phone agents that answer calls for each CS3 property. Handles: property inquiries, amenity questions, pricing/availability, tour scheduling, lead qualification, and transfers to human when needed.",
+            howItWorks: "Built on Atlas AI platform (youratlas.com). Each property has its own agent with custom knowledge base (property details, amenities, pricing, policies). Agents use natural conversation to qualify leads and book tours.",
+            whyBuilt: "Properties need 24/7 phone coverage. Human leasing agents can't answer every call. AI agents capture leads that would otherwise be lost, qualify them, and schedule tours automatically.",
+            howToUseSteps: [
+                "Log into Atlas AI (youratlas.com) with API key",
+                "Create new campaign for property",
+                "Build knowledge base with property details",
+                "Configure agent personality and responses",
+                "Set up phone number and call routing",
+                "Test with roleplay calls",
+                "Deploy and monitor performance"
+            ],
+            howToMaintain: "Monitor call logs weekly. Update knowledge base when pricing/availability changes. Review transcripts for improvement opportunities. Track conversion metrics.",
+            process: [
+                "Gather property info (amenities, pricing, policies, FAQs)",
+                "Create property knowledge base document",
+                "Set up Atlas campaign with property name",
+                "Configure agent: name, personality, voice",
+                "Add knowledge base to agent",
+                "Set up objection handling and escalation rules",
+                "Assign phone number",
+                "Test with 5-10 roleplay calls",
+                "Refine based on test results",
+                "Deploy live",
+                "Monitor and iterate weekly"
+            ],
+            relatedFiles: [
+                { name: "Atlas Platform", url: "https://youratlas.com", icon: "🔗" }
+            ]
+        },
+        {
+            id: 6,
+            name: "McKenzie STL Leasing Agent",
+            category: "agents",
+            dateCreated: "2026-02-01",
+            objective: "AI leasing agent for McKenzie at Sunset Hills property in St. Louis — 24/7 coverage to capture every lead and schedule tours automatically.",
+            whatItDoes: "Answers calls as 'Victoria', provides property information, answers questions about amenities/pricing/availability, qualifies prospects, and schedules tours.",
+            howItWorks: "Atlas AI agent with McKenzie-specific knowledge base. Phone: (314) 723-6092. Speaks naturally, handles objections, captures lead info, books tours into calendar.",
+            whyBuilt: "McKenzie needed 24/7 leasing coverage. This agent ensures no leads are missed and provides consistent, professional responses to all inquiries.",
+            howToUseSteps: [
+                "Call (314) 723-6092 to reach Victoria",
+                "Agent handles inquiry automatically",
+                "Lead info captured in Atlas dashboard",
+                "Tours scheduled automatically",
+                "Review transcripts in Atlas for follow-up"
+            ],
+            howToMaintain: "Update pricing/availability when it changes. Review call transcripts weekly. Refine responses based on common questions. Track tour-to-lease conversion.",
+            process: [
+                "Gathered McKenzie property details from Grace",
+                "Created knowledge base: amenities, floor plans, pricing, policies",
+                "Built agent 'Victoria' in Atlas",
+                "Configured voice and personality (friendly, professional)",
+                "Added objection handling for pricing concerns",
+                "Set up tour scheduling workflow",
+                "Assigned phone number (314) 723-6092",
+                "Tested with roleplay calls",
+                "Deployed live - ready for leads"
+            ],
+            relatedFilesText: "Atlas Platform → McKenzie Campaign"
         }
     ],
 
