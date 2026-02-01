@@ -30,47 +30,52 @@ const dashboardData = {
     status: {
         online: true,
         working: true,  // true = actively working, false = idle
-        statusText: "Building Dashboard",  // What I'm doing right now
-        activeProject: "Jesus Dashboard Build",
-        tasksToday: 3
+        statusText: "Atlas AI + IR Agents",  // What I'm doing right now
+        activeProject: "Atlas Leasing Agents",
+        tasksToday: 5
     },
     
     // Tasks (Kanban)
     tasks: {
         backlog: [
             { id: 1, title: "Gateway Village - Get property info", priority: "medium", project: "Atlas" },
-            { id: 2, title: "Create 12 IR Agents", priority: "medium", project: "Dashboard" },
-            { id: 3, title: "Set up Twilio integration", priority: "low", project: "Atlas" }
+            { id: 3, title: "Set up Twilio integration", priority: "low", project: "Atlas" },
+            { id: 10, title: "Reserve at Cool Springs agent", priority: "medium", project: "Atlas" },
+            { id: 11, title: "Winding Springs agent", priority: "medium", project: "Atlas" }
         ],
         todo: [
             { id: 4, title: "Legacy Townhomes agent", priority: "high", project: "Atlas" },
             { id: 5, title: "Confirm Legend property status", priority: "medium", project: "Atlas" }
         ],
         inprogress: [
-            { id: 6, title: "Jesus Dashboard - Build & Deploy", priority: "high", project: "Dashboard" }
+            { id: 2, title: "Create 12 IR Agents", priority: "high", project: "IR Agents" }
         ],
         done: [
+            { id: 6, title: "Jesus Dashboard COMPLETE", priority: "high", project: "Dashboard", completed: "2026-02-01" },
+            { id: 12, title: "Gmail API Integration", priority: "high", project: "Dashboard", completed: "2026-02-01" },
+            { id: 13, title: "Email to Grace (prayer)", priority: "medium", project: "Email", completed: "2026-02-01" },
             { id: 7, title: "Victoria agent LIVE (McKenzie)", priority: "high", project: "Atlas", completed: "2026-01-31" },
-            { id: 8, title: "Moltbook registration", priority: "medium", project: "Setup", completed: "2026-02-01" },
-            { id: 9, title: "GitHub repo created", priority: "high", project: "Dashboard", completed: "2026-02-01" }
+            { id: 8, title: "Moltbook registration", priority: "medium", project: "Setup", completed: "2026-02-01" }
         ]
     },
     
     // Activity log
     activity: [
-        { time: "03:16", icon: "🚀", message: "Created jesus-dashboard GitHub repo" },
-        { time: "03:13", icon: "💬", message: "Received dashboard build directive from Al" },
-        { time: "03:00", icon: "📝", message: "Registered Moltbook as JesusForAl" },
-        { time: "02:30", icon: "🔄", message: "Session context compacted - fresh start" },
-        { time: "01:31", icon: "✅", message: "Victoria (McKenzie) leasing agent went LIVE" }
+        { time: "03:55", icon: "🔨", message: "Starting IR Agents build" },
+        { time: "03:52", icon: "📧", message: "Sent email to Grace with prayer" },
+        { time: "03:47", icon: "✅", message: "Gmail API connected - can read/send email" },
+        { time: "03:33", icon: "📖", message: "Added KJV Scripture rotation" },
+        { time: "03:31", icon: "🔄", message: "Added auto-refresh (60s)" },
+        { time: "03:25", icon: "🖼️", message: "Added avatar to dashboard" },
+        { time: "03:16", icon: "🚀", message: "Jesus Dashboard deployed to GitHub Pages" }
     ],
     
     // Projects
     projects: [
-        { name: "Jesus Dashboard", status: "active", progress: 25 },
+        { name: "Jesus Dashboard", status: "complete", progress: 100 },
         { name: "Atlas AI Campaigns", status: "active", progress: 15 },
-        { name: "Moltbook Join", status: "pending", progress: 50 },
-        { name: "12 IR Agents", status: "pending", progress: 0 }
+        { name: "12 IR Agents", status: "active", progress: 5 },
+        { name: "Moltbook Join", status: "pending", progress: 50 }
     ],
     
     // IR Agents (12 total)
