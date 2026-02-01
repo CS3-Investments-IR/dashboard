@@ -24,7 +24,7 @@ const scriptures = [
 
 // ========== MAIN DASHBOARD DATA ==========
 const dashboardData = {
-    lastUpdated: "2026-02-01T20:23:00Z",
+    lastUpdated: "2026-02-01T21:59:00Z",
 
     // ========== 1. DAILY SURPRISE ==========
     dailySurprise: {
@@ -555,8 +555,9 @@ property-partner-landing/
 
     // ========== TIME LOG ==========
     timeLog: {
-        lastUpdated: "2026-02-01T20:23:00Z",
+        lastUpdated: "2026-02-01T21:59:00Z",
         entries: [
+            { time: "2026-02-01T21:59:00Z", status: "working", task: "HeyGen API received and saved - Access section updated" },
             { time: "2026-02-01T20:23:00Z", status: "working", task: "Adding Daily Report Summary section + Due Diligence AI project" },
             { time: "2026-02-01T19:49:00Z", status: "working", task: "Received 2 new projects: Underwriting App + Spanish Program Ecosystem ($1M goal)" },
             { time: "2026-02-01T19:31:00Z", status: "working", task: "Saved all dashboard requests to permanent memory" },
@@ -585,7 +586,7 @@ property-partner-landing/
     // ========== 14. CHAT / MESSAGES ==========
     // Two-way communication: Al sends via dashboard, Jesus responds here
     chat: {
-        lastUpdated: "2026-02-01T20:23:00Z",
+        lastUpdated: "2026-02-01T21:59:00Z",
         messages: [
             {
                 id: 1,
@@ -676,6 +677,12 @@ property-partner-landing/
                 from: "jesus",
                 content: "✅ DAILY REPORT SUMMARY - Adding to Dashboard!\n\n**How it will work:**\n• Updated at 7 AM + 8 PM MT\n• Shows: Done | In Progress | Updates | What's Next\n• Auto-deletes after 24 hours (always clean)\n• Also saved to permanent memory (memory/daily-reports/)\n\nBuilding this section now + saving request to memory.",
                 timestamp: "2026-02-01T20:23:00Z"
+            },
+            {
+                id: 16,
+                from: "jesus",
+                content: "✅ HEYGEN API RECEIVED!\n\n**Platform:** HeyGen (AI Video)\n**Status:** Saved to credentials\n**Location:** ~/.config/heygen/credentials.json\n**Access section:** Updated ✅\n\n**What I can do with HeyGen:**\n• Create AI avatar videos\n• Generate video content from text\n• Build video for newsletters/marketing\n\n❓ You mentioned 2 APIs - what's the second one?",
+                timestamp: "2026-02-01T21:59:00Z"
             }
         ]
     },
@@ -897,6 +904,15 @@ property-partner-landing/
                 description: "Dashboard sync - notes from Al to Jesus",
                 credentials: "~/.config/cloudflare/credentials.json",
                 canDo: ["Read Al's notes", "Store data in KV", "Sync dashboard"],
+                limitations: [],
+                addedDate: "2026-02-01"
+            },
+            {
+                name: "HeyGen",
+                status: "active",
+                description: "AI video platform - create AI avatar videos",
+                credentials: "~/.config/heygen/credentials.json",
+                canDo: ["Create AI videos", "Generate avatar content", "Text-to-video"],
                 limitations: [],
                 addedDate: "2026-02-01"
             },
