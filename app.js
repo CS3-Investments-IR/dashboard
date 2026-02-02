@@ -6,6 +6,7 @@
 
     // ========== GLOBAL CONSTANTS ==========
     const WORKER_URL = 'https://spring-mouse-1a4b.throbbing-mode-0605.workers.dev';
+    const LIVE_WORKER_URL = 'https://jesus-dashboard-worker.throbbing-mode-0605.workers.dev';
 
     // ========== INITIALIZATION ==========
     document.addEventListener('DOMContentLoaded', init);
@@ -17,6 +18,69 @@
         loadAllData();
         setupAutoRefresh();
         updateLastSync();
+        startLiveStatusPolling();
+    }
+
+    // ========== LIVE STATUS POLLING (Every 2 seconds) ==========
+    function startLiveStatusPolling() {
+        // Poll immediately
+        pollLiveStatus();
+        // Then every 2 seconds
+        setInterval(pollLiveStatus, 2000);
+    }
+
+    async function pollLiveStatus() {
+        try {
+            const response = await fetch(LIVE_WORKER_URL + '/live');
+            const data = await response.json();
+            updateLiveStatusDisplay(data);
+        } catch (error) {
+            console.error('Live status poll failed:', error);
+        }
+    }
+
+    function updateLiveStatusDisplay(data) {
+        // Update current task
+        const currentTask = document.getElementById('currentTask');
+        if (currentTask && data.currentTask) {
+            currentTask.textContent = data.currentTask;
+        }
+
+        // Update status indicator
+        const statusCard = document.getElementById('currentStatusCard');
+        if (statusCard) {
+            statusCard.classList.toggle('online', data.status === 'online');
+            statusCard.classList.toggle('offline', data.status !== 'online');
+        }
+
+        // Update last update time
+        const liveLastUpdate = document.getElementById('liveLastUpdate');
+        if (liveLastUpdate && data.lastUpdate) {
+            const time = new Date(data.lastUpdate);
+            const now = new Date();
+            const diffSec = Math.floor((now - time) / 1000);
+            if (diffSec < 60) {
+                liveLastUpdate.textContent = diffSec + 's ago';
+            } else if (diffSec < 3600) {
+                liveLastUpdate.textContent = Math.floor(diffSec / 60) + 'm ago';
+            } else {
+                liveLastUpdate.textContent = time.toLocaleTimeString();
+            }
+        }
+
+        // Update minute log if visible
+        const minuteLogList = document.getElementById('minuteLogList');
+        if (minuteLogList && data.minuteLog && data.minuteLog.length > 0) {
+            minuteLogList.innerHTML = data.minuteLog.map(entry => {
+                const time = new Date(entry.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                return `
+                    <div class="timelog-entry minute-entry">
+                        <span class="timelog-time">${time}</span>
+                        <span class="timelog-task">${entry.task}</span>
+                    </div>
+                `;
+            }).join('');
+        }
     }
 
     // ========== NAVIGATION ==========
