@@ -2358,12 +2358,32 @@ let currentDevotionId = null;
 
 async function loadDevotions() {
     try {
-        const response = await fetch(LIVE_WORKER_URL + '/devotions');
-        const data = await response.json();
-        renderDevotions(data);
+        // Use local devotionsData from devotions.js
+        if (typeof devotionsData !== 'undefined' && devotionsData.length > 0) {
+            renderDevotionsFromLocal(devotionsData);
+        } else {
+            console.error('devotionsData not loaded');
+        }
     } catch (error) {
         console.error('Failed to load devotions:', error);
     }
+}
+
+// Render devotions from local devotions.js data
+function renderDevotionsFromLocal(devotions) {
+    const pending = devotions.filter(d => d.status === 'pending');
+    const approved = devotions.filter(d => d.status === 'approved');
+    const scheduled = devotions.filter(d => d.status === 'scheduled');
+    const sent = devotions.filter(d => d.status === 'sent');
+    
+    const stats = {
+        pending: pending.length,
+        approved: approved.length,
+        scheduled: scheduled.length,
+        sent: sent.length
+    };
+    
+    renderDevotions({ stats: stats, emails: devotions });
 }
 
 function renderDevotions(data) {
@@ -2414,21 +2434,18 @@ function renderDevotions(data) {
     }
 }
 
-let devotionsData = null;
+let localDevotionsCache = null;
 
 async function openDevotionModal(id) {
-    if (!devotionsData) {
-        const response = await fetch(LIVE_WORKER_URL + '/devotions');
-        devotionsData = await response.json();
-    }
-    
-    const devotion = devotionsData.emails.find(e => e.id === id);
+    // Use local devotionsData from devotions.js
+    const devotions = (typeof devotionsData !== 'undefined') ? devotionsData : [];
+    const devotion = devotions.find(e => e.id === id);
     if (!devotion) return;
     
     currentDevotionId = id;
-    document.getElementById('devotionDate').textContent = devotion.date;
+    document.getElementById('devotionDate').textContent = `Day ${devotion.day} — ${devotion.month} ${devotion.dayOfMonth}`;
     document.getElementById('devotionScripture').textContent = devotion.scripture;
-    document.getElementById('devotionRef').textContent = '— ' + devotion.scriptureRef;
+    document.getElementById('devotionRef').textContent = '— ' + (devotion.reference || devotion.scriptureRef) + ' (KJV)';
     document.getElementById('devotionReflection').textContent = devotion.reflection;
     document.getElementById('devotionModal').style.display = 'flex';
 }
@@ -2506,3 +2523,72 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// ========== DEVOTIONS ADDITIONAL FUNCTIONS ==========
+
+function loadCurrentMonth() {
+    // Already loaded from devotions.js - just refresh
+    if (typeof devotionsData !== 'undefined') {
+        renderDevotionsFromLocal(devotionsData);
+    }
+}
+
+function approveAllPending() {
+    if (typeof devotionsData === 'undefined') return;
+    
+    devotionsData.forEach(d => {
+        if (d.status === 'pending') {
+            d.status = 'approved';
+            d.approvedAt = new Date().toISOString();
+        }
+    });
+    
+    renderDevotionsFromLocal(devotionsData);
+    showToast('✅ All devotions approved!');
+}
+
+function scheduleAllApproved() {
+    if (typeof devotionsData === 'undefined') return;
+    
+    devotionsData.forEach(d => {
+        if (d.status === 'approved') {
+            d.status = 'scheduled';
+            d.scheduledFor = d.date + 'T06:30:00-07:00'; // 6:30 AM MT
+        }
+    });
+    
+    renderDevotionsFromLocal(devotionsData);
+    showToast('📅 All approved devotions scheduled!');
+}
+
+function approveDevotionDirect(id) {
+    if (typeof devotionsData === 'undefined') return;
+    
+    const devotion = devotionsData.find(d => d.id === id);
+    if (devotion) {
+        devotion.status = 'approved';
+        devotion.approvedAt = new Date().toISOString();
+        renderDevotionsFromLocal(devotionsData);
+        showToast('✅ Devotion approved!');
+    }
+}
+
+function rejectDevotionDirect(id) {
+    if (typeof devotionsData === 'undefined') return;
+    
+    const devotion = devotionsData.find(d => d.id === id);
+    if (devotion) {
+        devotion.status = 'rejected';
+        renderDevotionsFromLocal(devotionsData);
+        showToast('❌ Devotion rejected');
+    }
+}
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    toast.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#1a1a2e;color:#fff;padding:15px 25px;border-radius:8px;z-index:10000;border:1px solid #00d4ff;';
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
