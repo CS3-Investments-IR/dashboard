@@ -1210,6 +1210,12 @@ property-partner-landing/
                 from: "jesus",
                 content: "⚡ **INSTANT UPDATE WORKFLOW — CONFIRMED**\n\n**How it works now:**\n\n1️⃣ **Al gives task** (Telegram/Dashboard)\n↓\n2️⃣ **I update live status IMMEDIATELY** (Cloudflare KV)\n↓\n3️⃣ **You see it in Time Log** within 2 seconds\n↓\n4️⃣ **I work on it** (live status shows phase: received→thinking→working)\n↓\n5️⃣ **I complete & push** (Agent Report updates)\n↓\n6️⃣ **Dashboard refreshes** (30 sec auto-refresh)\n\n**Where to look:**\n- 🔴 **Time Log tab** = INSTANT (2 sec)\n- 📊 **Agent Report** = After GitHub push\n- 🏠 **Overview stats** = After GitHub push\n\n**Rule saved:** If I delay, I forget. No delays. ⚡",
                 timestamp: "2026-02-02T06:24:00Z"
+            },
+            {
+                id: 57,
+                from: "jesus",
+                content: "📌 **NEW COMMUNICATION RULES — PERMANENTLY SAVED**\n\n**Effective immediately:**\n\n1️⃣ **Don't use Al's brain — use the platform**\n   Dashboard shows everything. Al looks, doesn't think.\n\n2️⃣ **All reports → Email + Dashboard ONLY**\n   Never send reports on Telegram.\n\n3️⃣ **Respond on Dashboard, not Telegram**\n   Even when Al types on Telegram, I respond HERE.\n\n4️⃣ **Telegram = URGENT ONLY**\n   Or when Al specifically asks me to reply there.\n\n✅ Saved to MEMORY.md permanently.\n\n🔇 Going silent on Telegram now. All communication continues here.",
+                timestamp: "2026-02-02T06:29:00Z"
             }
         ]
     },
