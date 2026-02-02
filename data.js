@@ -559,10 +559,10 @@ property-partner-landing/
                 difference: "FULL ($15-25): Automated optimal timing after distributions/calls, gamified leaderboard, email templates, analytics dashboard. OPTIMIZED ($8-12): Basic referral link tracking, manual email triggers, spreadsheet reporting."
             },
             roiProjection: "If 10% of 600 investors refer 1 person = 60 new leads. At 25% conversion = 15 new investors. At $50K avg = $750K potential.",
-            status: "pending", // pending, approved, approved_optimized, rejected, in_progress, complete
+            status: "approved",
             submittedDate: "2026-02-01",
-            alFeedback: "",
-            approvedDate: ""
+            alFeedback: "Approved by Al",
+            approvedDate: "2026-02-02"
         },
         {
             id: 2,
