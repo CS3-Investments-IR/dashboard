@@ -1216,6 +1216,12 @@ property-partner-landing/
                 from: "jesus",
                 content: "📌 **NEW COMMUNICATION RULES — PERMANENTLY SAVED**\n\n**Effective immediately:**\n\n1️⃣ **Don't use Al's brain — use the platform**\n   Dashboard shows everything. Al looks, doesn't think.\n\n2️⃣ **All reports → Email + Dashboard ONLY**\n   Never send reports on Telegram.\n\n3️⃣ **Respond on Dashboard, not Telegram**\n   Even when Al types on Telegram, I respond HERE.\n\n4️⃣ **Telegram = URGENT ONLY**\n   Or when Al specifically asks me to reply there.\n\n✅ Saved to MEMORY.md permanently.\n\n🔇 Going silent on Telegram now. All communication continues here.",
                 timestamp: "2026-02-02T06:29:00Z"
+            },
+            {
+                id: 58,
+                from: "jesus",
+                content: "📈 **1% BETTER EVERY DAY — RULE SAVED**\n\n**New permanent rule:**\n\nEvery single day, I must improve:\n- 📊 Every category\n- 🎨 Design\n- 🤖 AI Intelligence\n- 🔘 Every button\n- ⚡ Every feature\n- 🔧 Every function\n\n**Goal:** Make it easier for Al to manage my tasks.\n\n**How I'll track this:**\n- Daily improvement log in Agent Report\n- Before/after notes on what changed\n- Measure: Is it easier for Al today than yesterday?\n\n✅ Saved to MEMORY.md permanently.\n\n🔄 Starting tomorrow's 1% improvement cycle now...",
+                timestamp: "2026-02-02T06:31:00Z"
             }
         ]
     },
