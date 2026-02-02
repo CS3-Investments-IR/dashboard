@@ -6,7 +6,7 @@
 
     // ========== GLOBAL CONSTANTS ==========
     const WORKER_URL = 'https://spring-mouse-1a4b.throbbing-mode-0605.workers.dev';
-    const LIVE_WORKER_URL = 'https://jesus-dashboard-worker.throbbing-mode-0605.workers.dev';
+    const LIVE_WORKER_URL = 'https://spring-mouse-1a4b.throbbing-mode-0605.workers.dev'; // Same worker, /live endpoint
 
     // ========== INITIALIZATION ==========
     document.addEventListener('DOMContentLoaded', init);
@@ -31,8 +31,19 @@
 
     async function pollLiveStatus() {
         try {
+            // Fetch live status
             const response = await fetch(LIVE_WORKER_URL + '/live');
             const data = await response.json();
+            
+            // Also fetch minute log
+            try {
+                const logResponse = await fetch(LIVE_WORKER_URL + '/minute-log');
+                const logData = await logResponse.json();
+                data.minuteLog = logData;
+            } catch (e) {
+                console.error('Minute log fetch failed:', e);
+            }
+            
             updateLiveStatusDisplay(data);
         } catch (error) {
             console.error('Live status poll failed:', error);
