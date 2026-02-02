@@ -602,26 +602,29 @@ ${relatedFiles}
     }
 
     // ========== 6. LIBRARY ==========
-    function loadLibrary() {
-        // Load from data.js only - NO localStorage (was causing quota issues)
-        // Clear any old localStorage data
-        try { localStorage.removeItem('jesusLibrary'); } catch(e) {}
-        
-        let library = dashboardData.library || [];
-        renderLibrary(library);
-        setupLibraryFilters(library);
+    const FILES_URL = WORKER_URL + '/files';
+    
+    async function loadLibrary() {
+        // Load from Cloudflare KV + local data.js
+        try {
+            const response = await fetch(FILES_URL);
+            const cloudFiles = await response.json();
+            const localFiles = dashboardData.library || [];
+            const allFiles = [...(cloudFiles.files || []), ...localFiles];
+            renderLibrary(allFiles);
+            setupLibraryFilters(allFiles);
+        } catch (e) {
+            console.error('Error loading library:', e);
+            renderLibrary(dashboardData.library || []);
+            setupLibraryFilters(dashboardData.library || []);
+        }
     }
 
     function setupLibrary() {
         const uploadZone = document.getElementById('uploadZone');
         const fileInput = document.getElementById('fileUpload');
 
-        // Show info message on click instead of file upload
-        const showUploadInfo = () => {
-            alert('📤 To share files with Jesus:\n\n1. Send via Telegram (attach file)\n2. Share Google Drive link via Notes\n3. Paste content directly in Notes\n\nJesus will add received files to the library.');
-        };
-
-        // Drag and drop - show info
+        // Drag and drop - now uploads to cloud!
         uploadZone.addEventListener('dragover', (e) => {
             e.preventDefault();
             uploadZone.classList.add('dragover');
@@ -634,17 +637,53 @@ ${relatedFiles}
         uploadZone.addEventListener('drop', (e) => {
             e.preventDefault();
             uploadZone.classList.remove('dragover');
-            showUploadInfo();
+            handleFiles(e.dataTransfer.files);
         });
 
-        // Click to show info
-        uploadZone.addEventListener('click', showUploadInfo);
-        fileInput.addEventListener('change', showUploadInfo);
+        // Click to upload
+        uploadZone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
     }
 
-    // Files are now managed through data.js, not localStorage uploads
-    function handleFiles(files) {
-        alert('📤 To share files with Jesus:\n\n1. Send via Telegram (attach file)\n2. Share Google Drive link via Notes\n3. Paste content directly in Notes\n\nJesus will add received files to the library.');
+    // Upload files to Cloudflare KV!
+    async function handleFiles(files) {
+        const uploadStatus = document.createElement('div');
+        uploadStatus.className = 'upload-status';
+        uploadStatus.innerHTML = '⏳ Uploading...';
+        document.getElementById('uploadZone').appendChild(uploadStatus);
+        
+        for (const file of files) {
+            try {
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    const fileData = {
+                        name: file.name,
+                        type: file.type,
+                        size: file.size,
+                        folder: 'all',
+                        content: e.target.result // base64 content
+                    };
+                    
+                    const response = await fetch(FILES_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(fileData)
+                    });
+                    
+                    if (response.ok) {
+                        uploadStatus.innerHTML = '✅ ' + file.name + ' uploaded!';
+                        setTimeout(() => uploadStatus.remove(), 2000);
+                        loadLibrary(); // Refresh library
+                    } else {
+                        throw new Error('Upload failed');
+                    }
+                };
+                reader.readAsDataURL(file);
+            } catch (e) {
+                uploadStatus.innerHTML = '❌ Upload failed: ' + e.message;
+                setTimeout(() => uploadStatus.remove(), 3000);
+            }
+        }
     }
 
     function renderLibrary(items) {
