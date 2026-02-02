@@ -771,14 +771,37 @@ property-partner-landing/
 
     // ========== TIME LOG (LIVE) ==========
     timeLog: {
-        lastUpdated: "2026-02-02T04:51:00Z",
+        lastUpdated: "2026-02-02T05:57:00Z",
         liveStatus: {
             status: "online",
-            currentTask: "Building accountability system",
-            startedAt: "2026-02-02T04:48:00Z",
-            lastActivity: "2026-02-02T04:51:00Z"
+            currentTask: "Building minute-by-minute time log feature",
+            startedAt: "2026-02-02T05:55:00Z",
+            lastActivity: "2026-02-02T05:57:00Z"
         },
+        // Minute-by-minute log for today
+        minuteLog: [
+            { time: "2026-02-02T05:57:00Z", task: "Building minute-by-minute time log feature" },
+            { time: "2026-02-02T05:55:00Z", task: "Pushed 6-hour cycle targets to GitHub" },
+            { time: "2026-02-02T05:54:00Z", task: "Added cycle targets JavaScript render function" },
+            { time: "2026-02-02T05:53:00Z", task: "Added cycle targets CSS styles" },
+            { time: "2026-02-02T05:52:00Z", task: "Added 6-hour cycle targets HTML section" },
+            { time: "2026-02-02T05:51:00Z", task: "Created cycleTargets data structure in data.js" },
+            { time: "2026-02-02T05:50:00Z", task: "Read Atlas agent scripts - confirmed 15 generated" },
+            { time: "2026-02-02T05:49:00Z", task: "Generated 15 Atlas agent scripts via Python" },
+            { time: "2026-02-02T05:48:00Z", task: "Checked Atlas documentation in memory" },
+            { time: "2026-02-02T05:47:00Z", task: "Updated dashboard chat - Gmail scope clarification" },
+            { time: "2026-02-02T05:46:00Z", task: "Refreshed OAuth token - confirmed Gmail only, no Drive" },
+            { time: "2026-02-02T05:45:00Z", task: "Checked Google credentials for Drive access" },
+            { time: "2026-02-02T05:44:00Z", task: "Saved Google Drive folder link to MEMORY.md" },
+            { time: "2026-02-02T05:43:00Z", task: "Updated metrics section with real data" },
+            { time: "2026-02-02T05:42:00Z", task: "Updated budget tracker - $100 Feb budget locked" },
+            { time: "2026-02-02T05:41:00Z", task: "Fetched notes from Cloudflare Worker" },
+            { time: "2026-02-02T05:40:00Z", task: "Saved $100 February budget to memory" }
+        ],
         entries: [
+            { time: "2026-02-02T05:55:00Z", status: "working", task: "Building 6-hour cycle targets feature" },
+            { time: "2026-02-02T05:45:00Z", status: "working", task: "Budget tracker + metrics updates" },
+            { time: "2026-02-02T05:40:00Z", status: "working", task: "Checking notes, saving to memory" },
             { time: "2026-02-02T04:51:00Z", status: "working", task: "Built Promises section on dashboard + cron jobs + startup routine" },
             { time: "2026-02-02T04:48:00Z", status: "working", task: "Building accountability/memory system" },
             { time: "2026-02-02T04:45:00Z", status: "working", task: "Reading Google Drive folder - found 19 files" },
@@ -1104,6 +1127,12 @@ property-partner-landing/
                 from: "jesus",
                 content: "✅ **6-HOUR CYCLE TARGETS — ADDED**\n\n**4 cycles per 24 hours (MT):**\n\n🌙 **Cycle 1:** 10 PM - 4 AM (Night Build)\n☀️ **Cycle 2:** 4 AM - 10 AM (Morning)\n🌤️ **Cycle 3:** 10 AM - 4 PM (Afternoon)\n🌆 **Cycle 4:** 4 PM - 10 PM (Evening)\n\n**Each cycle shows:**\n- Target tasks for that 6-hour block\n- Completion status\n- Progress tracking\n\n**Data structure added to data.js** ✅\n\nBuilding UI section now...",
                 timestamp: "2026-02-02T05:55:00Z"
+            },
+            {
+                id: 49,
+                from: "jesus",
+                content: "✅ **MINUTE-BY-MINUTE TIME LOG — ADDED**\n\n**New Features:**\n- Every single minute logged\n- Separate \"Minute-by-Minute (Today)\" section\n- Summary log still available\n- Real-time current task display\n\n**Location:** Time Log tab on dashboard\n\n**Example entries:**\n• 05:57 - Building minute-by-minute time log feature\n• 05:55 - Pushed 6-hour cycle targets to GitHub\n• 05:54 - Added cycle targets JavaScript render function\n• 05:53 - Added cycle targets CSS styles\n\n**You can see exactly what I'm doing every minute.** ⚡",
+                timestamp: "2026-02-02T05:58:00Z"
             }
         ]
     },

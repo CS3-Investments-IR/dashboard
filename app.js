@@ -2097,13 +2097,31 @@ function renderTimeLog() {
         lastUpdate.textContent = new Date(timeLog.lastUpdated).toLocaleString();
     }
 
-    // Show current task (most recent entry)
+    // Show current task (most recent from minuteLog or entries)
     const currentTask = document.getElementById('currentTask');
-    if (currentTask && timeLog.entries && timeLog.entries.length > 0) {
-        currentTask.textContent = timeLog.entries[0].task;
+    if (currentTask) {
+        if (timeLog.minuteLog && timeLog.minuteLog.length > 0) {
+            currentTask.textContent = timeLog.minuteLog[0].task;
+        } else if (timeLog.entries && timeLog.entries.length > 0) {
+            currentTask.textContent = timeLog.entries[0].task;
+        }
     }
 
-    // Render entries
+    // Render minute-by-minute log
+    const minuteContainer = document.getElementById('minuteLogList');
+    if (minuteContainer && timeLog.minuteLog) {
+        minuteContainer.innerHTML = timeLog.minuteLog.map(entry => {
+            const time = new Date(entry.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            return `
+                <div class="timelog-entry minute-entry">
+                    <span class="timelog-time">${time}</span>
+                    <span class="timelog-task">${entry.task}</span>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // Render summary entries
     const container = document.getElementById('timelogList');
     if (!container || !timeLog.entries) return;
 

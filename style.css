@@ -3547,3 +3547,23 @@ textarea {
         grid-template-columns: 1fr;
     }
 }
+
+/* Minute-by-Minute Log */
+.minute-log {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.minute-entry {
+    background: rgba(99, 102, 241, 0.05);
+    border-left: 2px solid var(--accent-primary);
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.85rem;
+}
+
+.minute-entry .timelog-time {
+    font-weight: 600;
+    color: var(--accent-primary);
+    min-width: 60px;
+}
