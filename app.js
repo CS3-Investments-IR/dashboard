@@ -761,6 +761,9 @@ ${relatedFiles}
     // Cloudflare Worker for notes sync
     const WORKER_URL = 'https://spring-mouse-1a4b.throbbing-mode-0605.workers.dev';
     
+    // Expose to window for onclick fallback
+    window.syncNotesToJesus = syncNotesToJesus;
+    
     async function syncNotesToJesus() {
         console.log('Sync button clicked!');
         

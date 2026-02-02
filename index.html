@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jesus Dashboard V2 ⚡ | AI Agent Management Platform</title>
-    <link rel="stylesheet" href="style.css?v=24">
+    <link rel="stylesheet" href="style.css?v=25">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1a1a2e">
@@ -626,7 +626,7 @@
                             <input type="checkbox" id="notePriority"> ⚡ High Priority
                         </label>
                         <button class="btn btn-primary" id="saveNote">Save Note</button>
-                        <button class="btn btn-success" id="syncToJesus" title="Copy notes JSON - paste in GitHub">📤 Sync to GitHub</button>
+                        <button class="btn btn-success" id="syncToJesus" onclick="window.syncNotesToJesus && window.syncNotesToJesus()" title="Send note to Jesus via Cloudflare">📤 Sync to GitHub</button>
                     </div>
                 </div>
             </div>
@@ -1095,6 +1095,6 @@
 
     <!-- Scripts -->
     <script src="data.js?v=23"></script>
-    <script src="app.js?v=24"></script>
+    <script src="app.js?v=25"></script>
 </body>
 </html>
