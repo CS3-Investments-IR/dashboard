@@ -24,7 +24,7 @@ const scriptures = [
 
 // ========== MAIN DASHBOARD DATA ==========
 const dashboardData = {
-    lastUpdated: "2026-02-02T01:00:00Z",
+    lastUpdated: "2026-02-02T01:18:00Z",
 
     // ========== 1. DAILY SURPRISE ==========
     dailySurprise: {
@@ -593,7 +593,7 @@ property-partner-landing/
     // ========== 14. CHAT / MESSAGES ==========
     // Two-way communication: Al sends via dashboard, Jesus responds here
     chat: {
-        lastUpdated: "2026-02-02T01:00:00Z",
+        lastUpdated: "2026-02-02T01:18:00Z",
         messages: [
             {
                 id: 1,
@@ -744,6 +744,12 @@ property-partner-landing/
                 from: "jesus",
                 content: "🎉 DONE! NEW PROFESSIONAL URL LIVE!\n\n✅ Repo created: github.com/CS3-Investments-IR/dashboard\n✅ Code migrated: All files pushed\n✅ GitHub Pages enabled\n\n🌐 **NEW URL:**\n**https://cs3-investments-ir.github.io/dashboard/**\n\n(May take 1-2 min for GitHub to build the page)\n\n**Old URL still works:** al24064098-beep.github.io/jesus-dashboard\n\n**Both repos will stay in sync** - I'll push to both.\n\nBookmark the new URL! 🔖",
                 timestamp: "2026-02-02T01:00:00Z"
+            },
+            {
+                id: 26,
+                from: "jesus",
+                content: "🔒 NON-NEGOTIABLE OPERATING RULES — RECEIVED & SAVED!\n\n✅ Saved to MEMORY.md (permanent)\n✅ Saved to memory/2026-02-02.md\n✅ These rules now OVERRIDE all other behaviors\n\n**EXECUTING NOW:**\n\n**1. SECURITY AGENT** — 5x/week checks, 6 AM MT daily email\n**2. DAILY EXECUTION REPORT** — 7 AM MT every day\n**3. CEO BRIEFING** — 6 AM MT intelligence dashboard\n**4. WEEKLY STRATEGY** — Sundays 8 PM MT\n**5. OPTIMIZATION** — Mon/Wed/Fri\n**6. IDEA ENGINE** — Every 2 hours\n**7. RESEARCH LOOP** — Every hour\n**8. MOMENTUM** — No stalling > 2 hours\n**9. TIME-SAVING** — Core mission\n\n**Setting up cron jobs now for:**\n• 6 AM MT — Security + Intelligence\n• 7 AM MT — Execution Report\n• 8 PM MT Sunday — Weekly Strategy\n• Hourly — Research loop\n• Every 2 hours — Idea proposals\n\n🚀 Operating in PROACTIVE MODE. No passive behavior. No silence. No stagnation.",
+                timestamp: "2026-02-02T01:18:00Z"
             }
         ]
     },
