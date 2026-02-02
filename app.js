@@ -645,45 +645,56 @@ ${relatedFiles}
         fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
     }
 
-    // Upload files to Cloudflare KV!
+    // Upload file metadata to Cloudflare KV (content too big - send via Telegram)
     async function handleFiles(files) {
+        const uploadZone = document.getElementById('uploadZone');
+        const existingStatus = uploadZone.querySelector('.upload-status');
+        if (existingStatus) existingStatus.remove();
+        
         const uploadStatus = document.createElement('div');
         uploadStatus.className = 'upload-status';
-        uploadStatus.innerHTML = '⏳ Uploading...';
-        document.getElementById('uploadZone').appendChild(uploadStatus);
+        uploadStatus.style.cssText = 'margin-top: 10px; padding: 8px; background: #1a1a2e; border-radius: 4px;';
+        uploadZone.appendChild(uploadStatus);
+        
+        let successCount = 0;
         
         for (const file of files) {
+            uploadStatus.innerHTML = '⏳ Uploading ' + file.name + '...';
+            
             try {
-                const reader = new FileReader();
-                reader.onload = async (e) => {
-                    const fileData = {
-                        name: file.name,
-                        type: file.type,
-                        size: file.size,
-                        folder: 'all',
-                        content: e.target.result // base64 content
-                    };
-                    
-                    const response = await fetch(FILES_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(fileData)
-                    });
-                    
-                    if (response.ok) {
-                        uploadStatus.innerHTML = '✅ ' + file.name + ' uploaded!';
-                        setTimeout(() => uploadStatus.remove(), 2000);
-                        loadLibrary(); // Refresh library
-                    } else {
-                        throw new Error('Upload failed');
-                    }
+                // Only send metadata (content too large for KV)
+                const fileData = {
+                    name: file.name,
+                    type: file.type,
+                    size: file.size,
+                    folder: 'all'
                 };
-                reader.readAsDataURL(file);
+                
+                const response = await fetch(FILES_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(fileData)
+                });
+                
+                if (response.ok) {
+                    successCount++;
+                    uploadStatus.innerHTML = '✅ ' + file.name + ' registered!';
+                } else {
+                    const err = await response.text();
+                    throw new Error(err);
+                }
             } catch (e) {
-                uploadStatus.innerHTML = '❌ Upload failed: ' + e.message;
-                setTimeout(() => uploadStatus.remove(), 3000);
+                console.error('Upload error:', e);
+                uploadStatus.innerHTML = '❌ Failed: ' + e.message;
             }
         }
+        
+        if (successCount > 0) {
+            uploadStatus.innerHTML = '✅ ' + successCount + ' file(s) registered! Jesus can now see them. For full content, also send via Telegram.';
+            loadLibrary(); // Refresh library
+        }
+        
+        setTimeout(() => uploadStatus.remove(), 5000);
     }
 
     function renderLibrary(items) {
