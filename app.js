@@ -196,17 +196,19 @@
             document.getElementById('mainScriptureRef').textContent = '- ' + scripture.ref + ' (KJV)';
         }
 
-        // Quick Stats
+        // Quick Stats - Project Counts
+        const allProjects = data.agentReport?.allProjects || [];
+        const totalProjects = allProjects.length;
+        const inProgress = allProjects.filter(p => p.status === 'in-progress').length;
         const completedToday = data.agentReport?.completed?.length || 0;
         const blockers = data.agentReport?.blockers?.length || 0;
-        const totalBuilds = data.vault?.length || 0;
-        const notes = JSON.parse(localStorage.getItem('jesusNotes')) || data.notes || [];
-        const unreadNotes = notes.filter(n => n.status === 'unread').length;
+        const pendingOnAl = data.agentReport?.pendingOnAl?.length || 0;
 
+        document.getElementById('ovTotalProjects').textContent = totalProjects;
+        document.getElementById('ovInProgress').textContent = inProgress;
         document.getElementById('ovCompletedToday').textContent = completedToday;
         document.getElementById('ovBlockers').textContent = blockers;
-        document.getElementById('ovTotalBuilds').textContent = totalBuilds;
-        document.getElementById('ovUnreadNotes').textContent = unreadNotes;
+        document.getElementById('ovPendingOnAl').textContent = pendingOnAl;
 
         // Daily Surprise Preview
         if (data.dailySurprise?.today) {
