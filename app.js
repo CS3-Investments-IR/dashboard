@@ -765,31 +765,32 @@ ${relatedFiles}
     window.syncNotesToJesus = syncNotesToJesus;
     
     async function syncNotesToJesus() {
-        console.log('Sync button clicked!');
-        
-        // First check if there's text in the textarea - save it first
-        const contentArea = document.getElementById('noteContent');
-        const noteText = contentArea ? contentArea.value.trim() : '';
-        
-        if (noteText) {
-            console.log('Saving note first...');
-            saveNote(); // Auto-save before sync
+        // Immediate feedback that button was clicked
+        const syncBtn = document.getElementById('syncToJesus');
+        if (syncBtn) {
+            syncBtn.textContent = '⏳ Sending...';
+            syncBtn.disabled = true;
         }
         
-        // Small delay to ensure save completes
-        await new Promise(r => setTimeout(r, 100));
+        console.log('Sync button clicked!');
         
-        const notes = JSON.parse(localStorage.getItem('jesusNotes')) || [];
-        const unreadNotes = notes.filter(n => n.status === 'unread');
+        try {
+            // First check if there's text in the textarea
+            const contentArea = document.getElementById('noteContent');
+            const noteText = contentArea ? contentArea.value.trim() : '';
         
-        console.log('Unread notes:', unreadNotes.length);
-        
-        // If no saved notes but there's text, save it directly
-        if (unreadNotes.length === 0 && noteText) {
+            // If no text, show error
+            if (!noteText) {
+                alert('Please write a note first!');
+                return;
+            }
+            
+            // Get note type and priority
             const typeSelect = document.getElementById('noteType');
             const priorityCheck = document.getElementById('notePriority');
             
-            const directNote = {
+            // Build note object
+            const noteToSend = {
                 id: Date.now(),
                 type: typeSelect ? typeSelect.value : 'feedback',
                 content: noteText,
@@ -797,79 +798,37 @@ ${relatedFiles}
                 createdAt: new Date().toISOString()
             };
             
-            // Send directly
-            try {
-                const response = await fetch(WORKER_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        lastUpdated: new Date().toISOString(),
-                        notes: [directNote]
-                    })
-                });
-                
-                if (response.ok) {
-                    contentArea.value = '';
-                    alert('✅ Note sent to Jesus!');
-                    return;
-                }
-            } catch (e) {
-                console.error('Direct sync error:', e);
-                alert('Sync failed: ' + e.message);
-                return;
-            }
-        }
-        
-        if (unreadNotes.length === 0) {
-            alert('No notes to sync! Write a note first.');
-            return;
-        }
-        
-        // Format data
-        const exportData = {
-            lastUpdated: new Date().toISOString(),
-            notes: unreadNotes.map(n => ({
-                id: n.id,
-                type: n.type,
-                content: n.content,
-                priority: n.priority,
-                createdAt: n.createdAt
-            }))
-        };
-        
-        console.log('Sending to worker:', WORKER_URL);
-        
-        // Send to Cloudflare Worker
-        try {
+            console.log('Sending note to worker...');
+            
+            // Send to Cloudflare Worker
             const response = await fetch(WORKER_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(exportData)
+                body: JSON.stringify({
+                    lastUpdated: new Date().toISOString(),
+                    notes: [noteToSend]
+                })
             });
             
             console.log('Response status:', response.status);
             
             if (response.ok) {
-                // Mark notes as sent
-                notes.forEach(n => {
-                    if (n.status === 'unread') n.status = 'sent';
-                });
-                localStorage.setItem('jesusNotes', JSON.stringify(notes));
-                
                 // Clear the textarea
-                if (contentArea) contentArea.value = '';
-                
+                contentArea.value = '';
                 alert('✅ Note sent to Jesus!');
-                
-                loadNotes();
-                updateNotesBadge();
-                renderChat();
             } else {
                 throw new Error('Server returned ' + response.status);
             }
+            
         } catch (e) {
             console.error('Sync error:', e);
-            alert('Sync failed: ' + e.message + '\n\nTry refreshing the page.');
+            alert('❌ Sync failed: ' + e.message);
+        } finally {
+            // Reset button
+            if (syncBtn) {
+                syncBtn.textContent = '📤 Sync to GitHub';
+                syncBtn.disabled = false;
+            }
         }
     }
 
