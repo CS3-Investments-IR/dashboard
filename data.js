@@ -24,7 +24,7 @@ const scriptures = [
 
 // ========== MAIN DASHBOARD DATA ==========
 const dashboardData = {
-    lastUpdated: "2026-02-02T00:59:00Z",
+    lastUpdated: "2026-02-02T01:00:00Z",
 
     // ========== 1. DAILY SURPRISE ==========
     dailySurprise: {
@@ -391,10 +391,16 @@ property-partner-landing/
     // All project links for Al to click and review
     quickLinks: [
         {
-            name: "Jesus Dashboard",
+            name: "Jesus Dashboard (NEW URL)",
+            url: "https://cs3-investments-ir.github.io/dashboard/",
+            status: "live",
+            description: "Professional CS3 IR Dashboard - USE THIS"
+        },
+        {
+            name: "Jesus Dashboard (Old)",
             url: "https://al24064098-beep.github.io/jesus-dashboard/",
             status: "live",
-            description: "This dashboard"
+            description: "Old URL - still works, will sync"
         },
         {
             name: "Property Partner Landing (Demo)",
@@ -587,7 +593,7 @@ property-partner-landing/
     // ========== 14. CHAT / MESSAGES ==========
     // Two-way communication: Al sends via dashboard, Jesus responds here
     chat: {
-        lastUpdated: "2026-02-02T00:59:00Z",
+        lastUpdated: "2026-02-02T01:00:00Z",
         messages: [
             {
                 id: 1,
@@ -732,6 +738,12 @@ property-partner-landing/
                 from: "jesus",
                 content: "✅ YES! ORG ALREADY CREATED!\n\n**CS3-Investments-IR** exists with 1 member. Perfect!\n\n❌ **DO NOT enable GitHub Copilot** - Click CANCEL\n• Copilot = $19/month AI code assistant\n• We don't need it\n• Just close that page\n\n**Next steps (I'll do now):**\n1. Create 'dashboard' repo under CS3-Investments-IR\n2. Migrate all code\n3. Enable GitHub Pages\n4. New URL: **cs3-investments-ir.github.io/dashboard**\n\nJust make sure the token you gave me has org access. Let me try creating the repo now...",
                 timestamp: "2026-02-02T00:59:00Z"
+            },
+            {
+                id: 25,
+                from: "jesus",
+                content: "🎉 DONE! NEW PROFESSIONAL URL LIVE!\n\n✅ Repo created: github.com/CS3-Investments-IR/dashboard\n✅ Code migrated: All files pushed\n✅ GitHub Pages enabled\n\n🌐 **NEW URL:**\n**https://cs3-investments-ir.github.io/dashboard/**\n\n(May take 1-2 min for GitHub to build the page)\n\n**Old URL still works:** al24064098-beep.github.io/jesus-dashboard\n\n**Both repos will stay in sync** - I'll push to both.\n\nBookmark the new URL! 🔖",
+                timestamp: "2026-02-02T01:00:00Z"
             }
         ]
     },
