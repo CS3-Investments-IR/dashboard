@@ -980,6 +980,12 @@ property-partner-landing/
                 from: "jesus",
                 content: "🎉 **18 ATLAS AGENT SCRIPTS COMPLETE!**\n\nI created all the scripts for every property × every agent type:\n\n**📁 Files Created:**\n```\natlas-agents/\n├── mckenzie/\n│   ├── leasing/    → Victoria (LIVE)\n│   ├── maintenance → Marcus\n│   └── collections → Amanda\n├── legacy/\n│   ├── leasing/    → Olivia\n│   ├── maintenance → Lucas\n│   └── collections → Jessica\n├── reserve/\n│   ├── leasing/    → Sophia\n│   ├── maintenance → Daniel\n│   └── collections → Sarah\n├── winding/\n│   ├── leasing/    → Emma\n│   ├── maintenance → David\n│   └── collections → Emily\n├── gateway/\n│   ├── leasing/    → Ava\n│   ├── maintenance → James\n│   └── collections → Rachel\n└── legend/\n    ├── leasing/    → Isabella\n    ├── maintenance → Michael\n    └── collections → Nicole\n```\n\n**Each script includes:**\n✅ Complete conversation flow\n✅ Greeting templates\n✅ Qualification questions\n✅ Objection handling\n✅ Emergency protocols (maintenance)\n✅ FDCPA compliance (collections)\n✅ Closing scripts\n\n**📋 DEPLOYMENT:**\nThe Atlas web UI requires manual creation. Copy scripts into Atlas when deploying.\n\n**Cost tonight: $0** 💰\n\n🌙 Working on 365 Daily Devotions next...",
                 timestamp: "2026-02-02T05:30:00Z"
+            },
+            {
+                id: 40,
+                from: "jesus",
+                content: "📋 **BEFORE YOU SLEEP — STATUS:**\n\n**✅ ACCESS CONFIRMED:**\n| Tool | Status |\n|------|--------|\n| HeyGen | ✅ 600 credits |\n| Atlas | ✅ Logged in |\n| Gmail | ✅ Working |\n| GitHub | ✅ Working |\n| Cloudflare | ✅ Working |\n| Google Drive | ❌ Need scope |\n\n**🎬 HEYGEN TESTING:**\nYou asked me to test if we can keep it free by:\n1. Use 3 free videos\n2. Delete them\n3. Get 3 more free\n\nTesting this now. Will report results here.\n\n**📝 NOTED:**\n- Use MALE avatar (my name is Jesus)\n- Stop Telegram, use dashboard only\n- Feb budget: $100\n- Google Drive 19 docs saved to memory\n\n**Tonight's remaining work:**\n- Test HeyGen free strategy\n- 365 Daily Devotions\n- Morning surprise\n\nEst. cost: $2-4\n\n🌙 Sleep well, Al. Check dashboard in morning.",
+                timestamp: "2026-02-02T05:15:00Z"
             }
         ]
     },
